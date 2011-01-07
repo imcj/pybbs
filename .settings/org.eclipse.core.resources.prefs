@@ -1,4 +1,4 @@
-#Fri Jan 07 23:01:27 CST 2011
+#Sat Jan 08 02:18:24 CST 2011
 eclipse.preferences.version=1
-encoding//bbs/models.py=utf-8
-encoding//bbs/views.py=utf-8
+encoding//pybbs/models.py=utf-8
+encoding//pybbs/views.py=utf-8

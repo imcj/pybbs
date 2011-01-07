@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="utf-8" lang="utf-8">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Form::input中怎样加js事件  高手指教 - Kohana 中文</title>
+<link type="text/css" href="css/screen.css" rel="stylesheet" media="all" />
+<link type="text/css" href="css/layout.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="css/dropdown.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="css/default.ultimate.css" rel="stylesheet" media="screen" />
+</head>
+<body>
+<div id="wrap">
+  <div id="header">
+    <div class="block">
+      <div class="auth"><a href="#r" style="color:#003333; font-weight:bold;">注册</a> <a href="#">登录</a>  </div>
+      <div class="search">
+        <form action="/search">
+          <input type="text" name="q" id="header_search_query" value="搜索话题"/><input type="submit" value="搜索" />
+        </form>
+      </div>
+    </div>
+ <div class="logo"><a href="http://kohana.cn/" alt="Kohana 中文"><img src="images/logo3.png" ></a></div>
+    <!-- /logo -->
+    <div class="clear"></div>
+    <div id="cpanel">
+      <ul id="nav" class="dropdown dropdown-horizontal">
+        <li><a href="#">首页</a></li>
+        <li class="parent"><a href="">Kohana</a></li>
+        <li class="parent"><a>技术天堂</a></li>
+        <li class="parent"><a>数码设备</a></li>
+        <li class="parent"><a>站务管理</a></li>
+        <li class="parent"><a>Language</a></li>
+      </ul>
+      <div class="clear"></div>
+    </div>
+    <!-- /cpanel -->
+  </div>
+  <!-- /header -->
+  <div id="container">
+    <!--[if lt IE 7]>
+		<div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;margin-bottom: 20px;'>
+		<div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border: none;' alt='Close this notice'/></a></div>
+		<div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
+		  <div style='width: 75px; float: left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div>
+		  <div style='width: 275px; float: left; font-family: Arial, sans-serif;'>
+			<div style='font-size: 14px; font-weight: bold; margin-top: 12px;'>You are using an outdated browser</div>
+			<div style='font-size: 12px; margin-top: 6px; line-height: 12px;'>For a better experience using this site, please upgrade to a modern web browser.</div>
+		  </div>
+		  <div style='width: 75px; float: left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border: none;' alt='Get Firefox 3.5'/></a></div>
+		  <div style='width: 75px; float: left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border: none;' alt='Get Internet Explorer 8'/></a></div>
+		  <div style='width: 73px; float: left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border: none;' alt='Get Safari 4'/></a></div>
+		  <div style='float: left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border: none;' alt='Get Google Chrome'/></a></div>
+		</div>
+		</div>
+		<![endif]-->
+    <?php if (isset($sidebar)): ?>
+    <div id="sidebar">
+      <div class="widget">
+        <div class="block group"> <a href="http://kohana.cn/group/1000007">初入茅庐</a> </div>
+      </div>
+      <div class="widget">
+        <h3>统计</h3>
+        <div class="stats">
+          <table>
+            <tbody>
+              <tr>
+                <th>发布时间</th>
+                <th class="txt_right">2010-23-11 04:17</th>
+              </tr>
+              <tr>
+                <td>浏览数量</td>
+                <td class="txt_right">206</td>
+              </tr>
+              <tr>
+                <td>回复数量</td>
+                <td class="txt_right">3</td>
+              </tr>
+              <tr>
+                <td>收藏数量</td>
+                <td class="txt_right">0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="list_topics" class="widget">
+        <h3>最新讨论话题</h3>
+        <div class="content">
+          <ul>
+            <li class="topic_item topic-item-1000294"><a href="http://kohana.cn/group/learner/topic/1000294">Kohana比起其他的框架有哪些优势?</a></li>
+            <li class="topic_item topic-item-1000289"><a href="http://kohana.cn/group/learner/topic/1000289">Form::input中怎样加js事件  高手指教</a></li>
+            <li class="topic_item topic-item-1000295"><a href="http://kohana.cn/group/learner/topic/1000295">对于PHP框架（所有），ORM是鸡肋！</a></li>
+            <li class="topic_item topic-item-1000290"><a href="http://kohana.cn/group/learner/topic/1000290">请各位帮忙，解决一下问题，急!!!</a></li>
+            <li class="topic_item topic-item-1000287"><a href="http://kohana.cn/group/learner/topic/1000287">大家来讨论下cache模块的用法(方法已找到,10倍性能提升!)</a></li>
+            <li class="topic_item topic-item-1000279"><a href="http://kohana.cn/group/learner/topic/1000279">where() 里面如何写入mysql的时间函数</a></li>
+            <li class="topic_item topic-item-1000278"><a href="http://kohana.cn/group/learner/topic/1000278">报到~~~</a></li>
+            <li class="topic_item topic-item-1000054"><a href="http://kohana.cn/group/learner/topic/1000054">初学者报道~!</a></li>
+            <li class="topic_item topic-item-1000277"><a href="http://kohana.cn/group/learner/topic/1000277">Ko3 如何在IIS下实现rewrite</a></li>
+            <li class="topic_item topic-item-1000275"><a href="http://kohana.cn/group/learner/topic/1000275">如何让xxx.com转向www.xxx.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="widget">
+        <div class="block collection"> <a href="http://kohana.cn/topic/1000289/collectors">谁收藏了此话题</a> </div>
+      </div>
+    </div>
+    <!-- /sidebar -->
+    <div id="content" class="right_column">
+      <div class="topic" id="topic-1000289">
+        <h2> <a href="http://kohana.cn/collection/topic/1000289" title="点击收藏该话题"> <img src="http://kohana.cn/media/images/star_empty.png" /> </a> Form::input中怎样加js事件  高手指教 </h2>
+        <div class="owner">
+          <div class="details"> <span class="avatar"><img src="http://www.gravatar.com/avatar.php?gravatar_id=45b1c92e8773381e2046d4a2c08dccc6&amp;s=48&amp;r=G&amp;d=http%3A%2F%2Fkohana.cn%2Fmedia%2Fimages%2Fuser-default.jpg" /></span> <span class="author"><a href="http://kohana.cn/user/1000739">G-STAR</a></span> <span class="date">1 月之前</span>
+            <div class="clear"></div>
+          </div>
+          <div class="topic-content">
+            <p>Form::input中怎样加js事件  高手指教</p>
+          </div>
+        </div>
+      </div>
+      <!-- /topic -->
+      <div class="options line txt_right"> <a href="javascript:window.scrollTo(0,0);">回到顶部</a> | <a href="view.html#reply">回复主题</a> </div>
+      <!-- /options -->
+      <!-- topic's replies -->
+      <div id="post-1000883" class="post">
+        <div class="meta poster">
+          <ul id="details-1000883" class="details left">
+            <li class="author"><img id="avatar-1000883" src="http://www.gravatar.com/avatar.php?gravatar_id=c57067cb59bab56c65b4036ad48710a7&amp;s=30&amp;r=G&amp;d=http%3A%2F%2Fkohana.cn%2Fmedia%2Fimages%2Fuser-default-small.jpg" class="avatar" 0="1" /><a href="http://kohana.cn/user/aliang">ALiang</a></li>
+            <li class="date"> <a name="post-1000883" href="#post-1000883" title="2010-11-23 16:48:28">1 月之前</a> </li>
+          </ul>
+          <div class="clear"></div>
+        </div>
+        <div class="post-content">
+          <p>用jquery绑定事件吧，更方便灵活</p>
+        </div>
+      </div>
+      <!-- /topic's replies -->
+      <!-- reply form -->
+<div class="comments" id="reply">
+        <h3>发表讨论</h3>
+        <div class="tips" style="padding-left: 7px">在回复之前你需要先进行登录</div>
+        <form method="post" action="http://kohana.cn/login">
+          <div class="comments-body">
+            <table>
+              <tr>
+                <td class="label"><label>账户或邮箱</label></td>
+                <td><input type="text" name="username" value="" tabindex="100" /></td>
+              </tr>
+              <tr>
+                <td class="label"><label>密码</label></td>
+                <td><input type="password" name="password" value=""  tabindex="101" /></td>
+              </tr>
+              <tr>
+                <td colspan="2"><input type="checkbox" tabindex="102" value="true" name="remember"/>
+                  <span class="tips">记住我的登录状态</span> (<a href="http://kohana.cn/lostpassword">忘记密码</a>) </td>
+              </tr>
+            </table>
+          </div>
+          <div class="comments-actions txt_right">
+            <input type="hidden" name="redir" value="group/learner/topic/1000289" />
+            <input type="submit" tabindex="103"  value="登录" />
+          </div>
+        </form>
+      </div>
+      <div class="options">
+        <div class="txt_right"> <a href="http://kohana.cn/">返回首页</a> | <a href="http://kohana.cn/group/1000007">初入茅庐</a> | <a href="javascript:window.scrollTo(0,0);">回到顶部</a> </div>
+      </div>
+      <!-- /reply form -->
+    </div>
+    <!-- /content -->
+    <div class="clear"></div>
+  </div>
+  <!-- /container -->
+  <div id="footer">
+    <div class="left"> &copy; 2008-2011 <a href="http://51python.org/">51Python 中文网</a> </div>
+    <div id="right"> Rendered in 0.40072秒.
+      
+      Powered by <a href="http://51python.org" target="_blank">Eric</a> </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<div id="kohana-profiler"></div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2570916-16");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>
