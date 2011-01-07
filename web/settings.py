@@ -99,7 +99,6 @@ INSTALLED_APPS = (
     'django_hudson',
 )
 
-# ¸ødjango-hudson ¿´µÄ
 PROJECT_APPS = (
     'pybbs',
 )
