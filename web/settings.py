@@ -1,5 +1,5 @@
 import os, sys
-ROOT = os.path.abspath("..\\")
+ROOT = os.path.abspath(".")
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
