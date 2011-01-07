@@ -1,0 +1,2102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<div class="component-title-block"><div class="component-title">PyLint features</div></div>
+
+
+<div class="sect1-title">
+<a name="options"></a>1. Options</div>
+
+<div class="sect2-title">
+<a name="general-options"></a>1.1. General options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+rcfile</div>
+<div class="varlistitem">
+<div class="para">Specify a configuration file.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+init-hook</div>
+<div class="varlistitem">
+<div class="para">Python code to execute, usually for sys.path manipulation such as
+pygtk.require().</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+errors-only</div>
+<div class="varlistitem">
+<div class="para">In error mode, checkers without error messages are disabled and for others,
+only the ERROR messages are displayed, and no reports are done by default</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+profile</div>
+<div class="varlistitem">
+<div class="para">Profiled execution.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+ignore</div>
+<div class="varlistitem">
+<div class="para">Add &lt;file or directory&gt; to the black list. It should be a base name, not a
+path. You may set this option multiple times.</div>
+<div class="para">Default: <span class="literal">CVS</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+persistent</div>
+<div class="varlistitem">
+<div class="para">Pickle collected data for later comparisons.</div>
+<div class="para">Default: <span class="literal">yes</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+load-plugins</div>
+<div class="varlistitem">
+<div class="para">List of plugins (as comma separated values of python modules names) to load,
+usually to register additional checkers.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+long-help</div>
+<div class="varlistitem">
+<div class="para">more verbose help.</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="commands-options"></a>1.2. Commands options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+help-msg</div>
+<div class="varlistitem">
+<div class="para">Display a help message for the given message id and exit. The value may be a
+comma separated list of message ids.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+list-msgs</div>
+<div class="varlistitem">
+<div class="para">Generate pylint's messages.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+full-documentation</div>
+<div class="varlistitem">
+<div class="para">Generate pylint's full documentation.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+generate-rcfile</div>
+<div class="varlistitem">
+<div class="para">Generate a sample configuration file according to the current configuration.
+You can put other options before this one to get them in the generated
+configuration.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+generate-man</div>
+<div class="varlistitem">
+<div class="para">Generate pylint's man page.</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="messages-control-options"></a>1.3. Messages control options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+enable</div>
+<div class="varlistitem">
+<div class="para">Enable the message, report, category or checker with the given id(s). You can
+either give multiple identifier separated by comma (,) or put this option
+multiple time.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+disable</div>
+<div class="varlistitem">
+<div class="para">Disable the message, report, category or checker with the given id(s). You
+can either give multiple identifier separated by comma (,) or put this option
+multiple time (only on the command line, not in the configuration file where
+it should appear only once).</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="reports-options"></a>1.4. Reports options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+output-format</div>
+<div class="varlistitem">
+<div class="para">Set the output format. Available formats are text, parseable, colorized, msvs
+(visual studio) and html</div>
+<div class="para">Default: <span class="literal">text</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+include-ids</div>
+<div class="varlistitem">
+<div class="para">Include message's id in output</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+files-output</div>
+<div class="varlistitem">
+<div class="para">Put messages in a separate file for each module / package specified on the
+command line instead of printing them on stdout. Reports (if any) will be
+written in a file name "pylint_global.[txt|html]".</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+reports</div>
+<div class="varlistitem">
+<div class="para">Tells whether to display a full report or only the messages</div>
+<div class="para">Default: <span class="literal">yes</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+evaluation</div>
+<div class="varlistitem">
+<div class="para">Python expression which should return a note less than 10 (10 is the highest
+note). You have access to the variables errors warning, statement which
+respectively contain the number of errors / warnings messages and the total
+number of statements analyzed. This is used by the global evaluation report
+(RP0004).</div>
+<div class="para">Default: <span class="literal">10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10)</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+comment</div>
+<div class="varlistitem">
+<div class="para">Add a comment according to your evaluation note. This is used by the global
+evaluation report (RP0004).</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="metrics-checker"></a>2. metrics checker</div>
+
+<div class="sect2-title">
+<a name="reports"></a>2.1. Reports</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+RP0701</div>
+<div class="varlistitem">
+<div class="para">Raw metrics</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="logging-checker"></a>3. logging checker</div>
+
+<div class="sect2-title">
+<a name="messages"></a>3.1. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+W6501</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Specify string format arguments as logging function parameters</span>
+Used when a logging statement has a call form of "logging.&lt;logging
+method&gt;(format_string % (format_args...))". Such calls should leave string
+interpolation to the logging method itself and be written "logging.&lt;logging
+method&gt;(format_string, format_args...)" so that the program may avoid
+incurring the cost of the interpolation in those cases in which no message
+will be logged. For more, see <a class="" href="http://www.python.org/dev/peps/pep-0282/">http://www.python.org/dev/peps/pep-0282/</a>.</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="similarities-checker"></a>4. similarities checker</div>
+
+<div class="sect2-title">
+<a name="id1"></a>4.1. Options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+min-similarity-lines</div>
+<div class="varlistitem">
+<div class="para">Minimum lines number of a similarity.</div>
+<div class="para">Default: <span class="literal">4</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+ignore-comments</div>
+<div class="varlistitem">
+<div class="para">Ignore comments when computing similarities.</div>
+<div class="para">Default: <span class="literal">yes</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+ignore-docstrings</div>
+<div class="varlistitem">
+<div class="para">Ignore docstrings when computing similarities.</div>
+<div class="para">Default: <span class="literal">yes</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id2"></a>4.2. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+R0801</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Similar lines in %s files</span>
+Indicates that a set of similar lines has been detected among multiple file.
+This usually means that the code should be refactored to avoid this
+duplication.</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id3"></a>4.3. Reports</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+R0801</div>
+<div class="varlistitem">
+<div class="para">Duplication</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="string-format-checker"></a>5. string_format checker</div>
+
+<div class="sect2-title">
+<a name="id4"></a>5.1. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+E9900</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Unsupported format character %r (%#02x) at index %d</span>
+Used when a unsupported format character is used in a format string.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E9901</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Format string ends in middle of conversion specifier</span>
+Used when a format string terminates before the end of a conversion specifier.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E9902</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Mixing named and unnamed conversion specifiers in format string</span>
+Used when a format string contains both named (e.g. '%(foo)d') and unnamed
+(e.g. '%d') conversion specifiers. This is also used when a named conversion
+specifier contains * for the minimum field width and/or precision.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E9903</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Expected mapping for format string, not %s</span>
+Used when a format string that uses named conversion specifiers is used with
+an argument that is not a mapping.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E9904</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Missing key %r in format string dictionary</span>
+Used when a format string that uses named conversion specifiers is used with a
+dictionary that doesn't contain all the keys required by the format string.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E9905</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too many arguments for format string</span>
+Used when a format string that uses unnamed conversion specifiers is given too
+few arguments.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E9906</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Not enough arguments for format string</span>
+Used when a format string that uses unnamed conversion specifiers is given too
+many arguments</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W9900</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Format string dictionary key should be a string, not %s</span>
+Used when a format string that uses named conversion specifiers is used with a
+dictionary whose keys are not all strings.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W9901</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Unused key %r in format string dictionary</span>
+Used when a format string that uses named conversion specifiers is used with a
+dictionary that conWtains keys not required by the format string.</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="format-checker"></a>6. format checker</div>
+
+<div class="sect2-title">
+<a name="id5"></a>6.1. Options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+max-line-length</div>
+<div class="varlistitem">
+<div class="para">Maximum number of characters on a single line.</div>
+<div class="para">Default: <span class="literal">80</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+max-module-lines</div>
+<div class="varlistitem">
+<div class="para">Maximum number of lines in a module</div>
+<div class="para">Default: <span class="literal">1000</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+indent-string</div>
+<div class="varlistitem">
+<div class="para">String used as indentation unit. This is usually " " (4 spaces) or "t" (1
+tab).</div>
+<div class="para">Default: <span class="literal">'    '</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id6"></a>6.2. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+W0301</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Unnecessary semicolon</span>
+Used when a statement is ended by a semi-colon (";"), which isn't necessary
+(that's python, not C ;).</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0311</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Bad indentation. Found %s %s, expected %s</span>
+Used when an unexpected number of indentation's tabulations or spaces has been
+found.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0312</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Found indentation with %ss instead of %ss</span>
+Used when there are some mixed tabs and spaces in a module.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0331</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Use of the &lt;&gt; operator</span>
+Used when the deprecated "&lt;&gt;" operator is used instead of "!=".</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0332</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Use l as long integer identifier</span>
+Used when a lower case "l" is used to mark a long integer. You should use a
+upper case "L" since the letter "l" looks too much like the digit "1"</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0333</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Use of the `` operator</span>
+Used when the deprecated "``" (backtick) operator is used instead of the str()
+function.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0301</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Line too long (%s/%s)</span>
+Used when a line is longer than a given number of characters.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0302</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too many lines in module (%s)</span>
+Used when a module has too much lines, reducing its readability.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0321</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">More than one statement on a single line</span>
+Used when more than on statement are found on the same line.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0322</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Operator not preceded by a space</span>
+Used when one of the following operator (!= | &lt;= | == | &gt;= | &lt; | &gt; | = | += |
+-= | *= | /= | %) is not preceded by a space.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0323</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Operator not followed by a space</span>
+Used when one of the following operator (!= | &lt;= | == | &gt;= | &lt; | &gt; | = | += |
+-= | *= | /= | %) is not followed by a space.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0324</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Comma not followed by a space</span>
+Used when a comma (",") is not followed by a space.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+F0321</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Format detection error in %r</span>
+Used when an unexpected error occurred in bad format detection.Please report
+the error if it occurs.</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="typecheck-checker"></a>7. typecheck checker</div>
+
+<div class="sect2-title">
+<a name="id7"></a>7.1. Options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+ignore-mixin-members</div>
+<div class="varlistitem">
+<div class="para">Tells whether missing members accessed in mixin class should be ignored. A
+mixin class is detected if its name ends with "mixin" (case insensitive).</div>
+<div class="para">Default: <span class="literal">yes</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+ignored-classes</div>
+<div class="varlistitem">
+<div class="para">List of classes names for which member attributes should not be checked
+(useful for classes with attributes dynamically set).</div>
+<div class="para">Default: <span class="literal">SQLObject</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+zope</div>
+<div class="varlistitem">
+<div class="para">When zope mode is activated, add a predefined set of Zope acquired attributes
+to generated-members.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+generated-members</div>
+<div class="varlistitem">
+<div class="para">List of members which are set dynamically and missed by pylint inference
+system, and so shouldn't trigger E0201 when accessed.</div>
+<div class="para">Default: <span class="literal">REQUEST,acl_users,aq_parent</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id8"></a>7.2. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+E1101</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">%s %r has no %r member</span>
+Used when a variable is accessed for an unexistent member.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E1102</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">%s is not callable</span>
+Used when an object being called has been inferred to a non callable object</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E1103</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">%s %r has no %r member (but some types could not be inferred)</span>
+Used when a variable is accessed for an unexistent member, but astng was not
+able to interpret all possible types of this variable.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E1111</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Assigning to function call which doesn't return</span>
+Used when an assignment is done on a function call but the inferred function
+doesn't return anything.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E1120</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">No value passed for parameter %s in function call</span>
+Used when a function call passes too few arguments.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E1121</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too many positional arguments for function call</span>
+Used when a function call passes too many positional arguments.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E1122</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Duplicate keyword argument %r in function call</span>
+Used when a function call passes the same keyword argument multiple times.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E1123</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Passing unexpected keyword argument %r in function call</span>
+Used when a function call passes a keyword argument that doesn't correspond to
+one of the function's parameter names.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E1124</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Multiple values passed for parameter %r in function call</span>
+Used when a function call would result in assigning multiple values to a
+function parameter, one value from a positional argument and one from a
+keyword argument.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W1111</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Assigning to function call which only returns None</span>
+Used when an assignment is done on a function call but the inferred function
+returns nothing but None.</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="variables-checker"></a>8. variables checker</div>
+
+<div class="sect2-title">
+<a name="id9"></a>8.1. Options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+init-import</div>
+<div class="varlistitem">
+<div class="para">Tells whether we should check for unused import in __init__ files.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+dummy-variables-rgx</div>
+<div class="varlistitem">
+<div class="para">A regular expression matching the beginning of the name of dummy variables
+(i.e. not used).</div>
+<div class="para">Default: <span class="literal">_|dummy</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+additional-builtins</div>
+<div class="varlistitem">
+<div class="para">List of additional names supposed to be defined in builtins. Remember that
+you should avoid to define new builtins when possible.</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id10"></a>8.2. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+E0601</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Using variable %r before assignment</span>
+Used when a local variable is accessed before it's assignment.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0602</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Undefined variable %r</span>
+Used when an undefined variable is accessed.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0611</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">No name %r in module %r</span>
+Used when a name cannot be found in a module.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0601</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Global variable %r undefined at the module level</span>
+Used when a variable is defined through the "global" statement but the
+variable is not defined in the module scope.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0602</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Using global for %r but no assignment is done</span>
+Used when a variable is defined through the "global" statement but no
+assignment to this variable is done.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0603</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Using the global statement</span>
+Used when you use the "global" statement to update a global variable. PyLint
+just try to discourage this usage. That doesn't mean you can not use it !</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0604</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Using the global statement at the module level</span>
+Used when you use the "global" statement at the module level since it has no
+effect</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0611</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Unused import %s</span>
+Used when an imported module or variable is not used.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0612</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Unused variable %r</span>
+Used when a variable is defined but not used.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0613</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Unused argument %r</span>
+Used when a function or method argument is not used.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0614</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Unused import %s from wildcard import</span>
+Used when an imported module or variable is not used from a 'from X import *'
+style import.</div>
+<div class="para">Inline emphasis start-string without end-string.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0621</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Redefining name %r from outer scope (line %s)</span>
+Used when a variable's name hide a name defined in the outer scope.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0622</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Redefining built-in %r</span>
+Used when a variable or function override a built-in.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0631</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Using possibly undefined loop variable %r</span>
+Used when an loop variable (i.e. defined by a for loop or a list comprehension
+or a generator expression) is used outside the loop.</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="miscellaneous-checker"></a>9. miscellaneous checker</div>
+
+<div class="sect2-title">
+<a name="id13"></a>9.1. Options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+notes</div>
+<div class="varlistitem">
+<div class="para">List of note tags to take in consideration, separated by a comma.</div>
+<div class="para">Default: <span class="literal">FIXME,XXX,TODO</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id14"></a>9.2. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+E0501</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Non ascii characters found but no encoding specified (PEP 263)</span>
+Used when some non ascii characters are detected but now encoding is
+specified, as explicited in the PEP 263.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0502</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Wrong encoding specified (%s)</span>
+Used when a known encoding is specified but the file doesn't seem to be
+actually in this encoding.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0511</div>
+<div class="varlistitem">
+<div class="para">Used when a warning note as FIXME or XXX is detected.</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="imports-checker"></a>10. imports checker</div>
+
+<div class="sect2-title">
+<a name="id15"></a>10.1. Options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+deprecated-modules</div>
+<div class="varlistitem">
+<div class="para">Deprecated modules which should not be used, separated by a comma</div>
+<div class="para">Default: <span class="literal">regsub,string,TERMIOS,Bastion,rexec</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+import-graph</div>
+<div class="varlistitem">
+<div class="para">Create a graph of every (i.e. internal and external) dependencies in the
+given file (report RP0402 must not be disabled)</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+ext-import-graph</div>
+<div class="varlistitem">
+<div class="para">Create a graph of external dependencies in the given file (report RP0402 must
+not be disabled)</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+int-import-graph</div>
+<div class="varlistitem">
+<div class="para">Create a graph of internal dependencies in the given file (report RP0402 must
+not be disabled)</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id16"></a>10.2. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+W0401</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Wildcard import %s</span>
+Used when <span class="emphasis">from module import *</span> is detected.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0402</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Uses of a deprecated module %r</span>
+Used a module marked as deprecated is imported.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0403</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Relative import %r, should be %r</span>
+Used when an import relative to the package directory is detected.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0404</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Reimport %r (imported line %s)</span>
+Used when a module is reimported multiple times.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0406</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Module import itself</span>
+Used when a module is importing itself.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0410</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">__future__ import is not the first non docstring statement</span>
+Python 2.5 and greater require __future__ import to be the first non docstring
+statement in the module.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0401</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Cyclic import (%s)</span>
+Used when a cyclic import between two or more modules is detected.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+F0401</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Unable to import %r</span>
+Used when pylint has been unable to import a module.</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id17"></a>10.3. Reports</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+RP0401</div>
+<div class="varlistitem">
+<div class="para">External dependencies</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+RP0402</div>
+<div class="varlistitem">
+<div class="para">Modules dependencies graph</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="classes-checker"></a>11. classes checker</div>
+
+<div class="sect2-title">
+<a name="id18"></a>11.1. Options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+ignore-iface-methods</div>
+<div class="varlistitem">
+<div class="para">List of interface methods to ignore, separated by a comma. This is used for
+instance to not check methods defines in Zope's Interface base class.</div>
+<div class="para">Default: <span class="literal">isImplementedBy,deferred,extends,names,namesAndDescriptions,queryDescriptionFor,getBases,getDescriptionFor,getDoc,getName,getTaggedValue,getTaggedValueTags,isEqualOrExtendedBy,setTaggedValue,isImplementedByInstancesOf,adaptWith,is_implemented_by</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+defining-attr-methods</div>
+<div class="varlistitem">
+<div class="para">List of method names used to declare (i.e. assign) instance attributes.</div>
+<div class="para">Default: <span class="literal">__init__,__new__,setUp</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id19"></a>11.2. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+E0202</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">An attribute inherited from %s hide this method</span>
+Used when a class defines a method which is hidden by an instance attribute
+from an ancestor class.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0203</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Access to member %r before its definition line %s</span>
+Used when an instance member is accessed before it's actually assigned.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0211</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Method has no argument</span>
+Used when a method which should have the bound instance as first argument has
+no argument defined.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0213</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Method should have "self" as first argument</span>
+Used when a method has an attribute different the "self" as first argument.
+This is considered as an error since this is a so common convention that you
+shouldn't break it!</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0221</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Interface resolved to %s is not a class</span>
+Used when a class claims to implement an interface which is not a class.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0222</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Missing method %r from %s interface</span>
+Used when a method declared in an interface is missing from a class
+implementing this interface</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0201</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Attribute %r defined outside __init__</span>
+Used when an instance attribute is defined outside the __init__ method.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0211</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Static method with %r as first argument</span>
+Used when a static method has "self" or "cls" as first argument.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0212</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Access to a protected member %s of a client class</span>
+Used when a protected member (i.e. class member with a name beginning with an
+underscore) is access outside the class or a descendant of the class where
+it's defined.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0221</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Arguments number differs from %s method</span>
+Used when a method has a different number of arguments than in the implemented
+interface or in an overridden method.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0222</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Signature differs from %s method</span>
+Used when a method signature is different than in the implemented interface or
+in an overridden method.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0223</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Method %r is abstract in class %r but is not overridden</span>
+Used when an abstract method (i.e. raise NotImplementedError) is not
+overridden in concrete class.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0231</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">__init__ method from base class %r is not called</span>
+Used when an ancestor class method has an __init__ method which is not called
+by a derived class.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0232</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Class has no __init__ method</span>
+Used when a class has no __init__ method, neither its parent classes.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0233</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">__init__ method from a non direct base class %r is called</span>
+Used when an __init__ method is called on a class which is not in the direct
+ancestors for the analysed class.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0201</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Method could be a function</span>
+Used when a method doesn't use its bound instance, and so could be written as
+a function.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0202</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Class method should have "cls" as first argument</span>
+Used when a class method has an attribute different than "cls" as first
+argument, to easily differentiate them from regular instance methods.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0203</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Metaclass method should have "mcs" as first argument</span>
+Used when a metaclass method has an attribute different the "mcs" as first
+argument.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+F0202</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Unable to check methods signature (%s / %s)</span>
+Used when PyLint has been unable to check methods signature compatibility for
+an unexpected reason. Please report this kind if you don't make sense of it.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+F0220</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">failed to resolve interfaces implemented by %s (%s)</span>
+Used when a PyLint as failed to find interfaces implemented by a class</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="design-checker"></a>12. design checker</div>
+
+<div class="sect2-title">
+<a name="id20"></a>12.1. Options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+max-args</div>
+<div class="varlistitem">
+<div class="para">Maximum number of arguments for function / method</div>
+<div class="para">Default: <span class="literal">5</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+ignored-argument-names</div>
+<div class="varlistitem">
+<div class="para">Argument names that match this expression will be ignored. Default to name
+with leading underscore</div>
+<div class="para">Default: <span class="literal">_.*</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+max-locals</div>
+<div class="varlistitem">
+<div class="para">Maximum number of locals for function / method body</div>
+<div class="para">Default: <span class="literal">15</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+max-returns</div>
+<div class="varlistitem">
+<div class="para">Maximum number of return / yield for function / method body</div>
+<div class="para">Default: <span class="literal">6</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+max-branchs</div>
+<div class="varlistitem">
+<div class="para">Maximum number of branch for function / method body</div>
+<div class="para">Default: <span class="literal">12</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+max-statements</div>
+<div class="varlistitem">
+<div class="para">Maximum number of statements in function / method body</div>
+<div class="para">Default: <span class="literal">50</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+max-parents</div>
+<div class="varlistitem">
+<div class="para">Maximum number of parents for a class (see R0901).</div>
+<div class="para">Default: <span class="literal">7</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+max-attributes</div>
+<div class="varlistitem">
+<div class="para">Maximum number of attributes for a class (see R0902).</div>
+<div class="para">Default: <span class="literal">7</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+min-public-methods</div>
+<div class="varlistitem">
+<div class="para">Minimum number of public methods for a class (see R0903).</div>
+<div class="para">Default: <span class="literal">2</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+max-public-methods</div>
+<div class="varlistitem">
+<div class="para">Maximum number of public methods for a class (see R0904).</div>
+<div class="para">Default: <span class="literal">20</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id21"></a>12.2. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+R0901</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too many ancestors (%s/%s)</span>
+Used when class has too many parent classes, try to reduce this to get a more
+simple (and so easier to use) class.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0902</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too many instance attributes (%s/%s)</span>
+Used when class has too many instance attributes, try to reduce this to get a
+more simple (and so easier to use) class.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0903</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too few public methods (%s/%s)</span>
+Used when class has too few public methods, so be sure it's really worth it.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0904</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too many public methods (%s/%s)</span>
+Used when class has too many public methods, try to reduce this to get a more
+simple (and so easier to use) class.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0911</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too many return statements (%s/%s)</span>
+Used when a function or method has too many return statement, making it hard
+to follow.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0912</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too many branches (%s/%s)</span>
+Used when a function or method has too many branches, making it hard to
+follow.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0913</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too many arguments (%s/%s)</span>
+Used when a function or method takes too many arguments.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0914</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too many local variables (%s/%s)</span>
+Used when a function or method has too many local variables.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0915</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Too many statements (%s/%s)</span>
+Used when a function or method has too many statements. You should then split
+it in smaller functions / methods.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0921</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Abstract class not referenced</span>
+Used when an abstract class is not used as ancestor anywhere.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0922</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Abstract class is only referenced %s times</span>
+Used when an abstract class is used less than X times as ancestor.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+R0923</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Interface not implemented</span>
+Used when an interface class is not implemented anywhere.</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="basic-checker"></a>13. basic checker</div>
+
+<div class="sect2-title">
+<a name="id22"></a>13.1. Options</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+module-rgx</div>
+<div class="varlistitem">
+<div class="para">Regular expression which should only match correct module names</div>
+<div class="para">Default: <span class="literal">(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+const-rgx</div>
+<div class="varlistitem">
+<div class="para">Regular expression which should only match correct module level names</div>
+<div class="para">Default: <span class="literal">(([A-Z_][A-Z0-9_]*)|(__.*__))$</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+class-rgx</div>
+<div class="varlistitem">
+<div class="para">Regular expression which should only match correct class names</div>
+<div class="para">Default: <span class="literal">[A-Z_][a-zA-Z0-9]+$</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+function-rgx</div>
+<div class="varlistitem">
+<div class="para">Regular expression which should only match correct function names</div>
+<div class="para">Default: <span class="literal">[a-z_][a-z0-9_]{2,30}$</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+method-rgx</div>
+<div class="varlistitem">
+<div class="para">Regular expression which should only match correct method names</div>
+<div class="para">Default: <span class="literal">[a-z_][a-z0-9_]{2,30}$</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+attr-rgx</div>
+<div class="varlistitem">
+<div class="para">Regular expression which should only match correct instance attribute names</div>
+<div class="para">Default: <span class="literal">[a-z_][a-z0-9_]{2,30}$</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+argument-rgx</div>
+<div class="varlistitem">
+<div class="para">Regular expression which should only match correct argument names</div>
+<div class="para">Default: <span class="literal">[a-z_][a-z0-9_]{2,30}$</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+variable-rgx</div>
+<div class="varlistitem">
+<div class="para">Regular expression which should only match correct variable names</div>
+<div class="para">Default: <span class="literal">[a-z_][a-z0-9_]{2,30}$</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+inlinevar-rgx</div>
+<div class="varlistitem">
+<div class="para">Regular expression which should only match correct list comprehension /
+generator expression variable names</div>
+<div class="para">Default: <span class="literal">[A-Za-z_][A-Za-z0-9_]*$</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+good-names</div>
+<div class="varlistitem">
+<div class="para">Good variable names which should always be accepted, separated by a comma</div>
+<div class="para">Default: <span class="literal">i,j,k,ex,Run,_</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+bad-names</div>
+<div class="varlistitem">
+<div class="para">Bad variable names which should always be refused, separated by a comma</div>
+<div class="para">Default: <span class="literal">foo,bar,baz,toto,tutu,tata</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+no-docstring-rgx</div>
+<div class="varlistitem">
+<div class="para">Regular expression which should only match functions or classes name which do
+not require a docstring</div>
+<div class="para">Default: <span class="literal">__.*__</span>
+</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+required-attributes</div>
+<div class="varlistitem">
+<div class="para">Required attributes for module, separated by a comma</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+bad-functions</div>
+<div class="varlistitem">
+<div class="para">List of builtins function names that should not be used, separated by a comma</div>
+<div class="para">Default: <span class="literal">map,filter,apply,input</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id23"></a>13.2. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+E0100</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">__init__ method is a generator</span>
+Used when the special class method __init__ is turned into a generator by a
+yield in its body.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0101</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Explicit return in __init__</span>
+Used when the special class method __init__ has an explicit return value.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0102</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">%s already defined line %s</span>
+Used when a function / class / method is redefined.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0103</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">%r not properly in loop</span>
+Used when break or continue keywords are used outside a loop.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0104</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Return outside function</span>
+Used when a "return" statement is found outside a function or method.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0105</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Yield outside function</span>
+Used when a "yield" statement is found outside a function or method.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0106</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Return with argument inside generator</span>
+Used when a "return" statement with an argument is found outside in a
+generator function or method (e.g. with some "yield" statements).</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0107</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Use of the non-existent %s operator</span>
+Used when you attempt to use the C-style pre-increment orpre-decrement
+operator -- and ++, which doesn't exist in Python.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0101</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Unreachable code</span>
+Used when there is some code behind a "return" or "raise" statement, which
+will never be accessed.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0102</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Dangerous default value %s as argument</span>
+Used when a mutable value as list or dictionary is detected in a default value
+for an argument.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0104</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Statement seems to have no effect</span>
+Used when a statement doesn't have (or at least seems to) any effect.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0105</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">String statement has no effect</span>
+Used when a string is used as a statement (which of course has no effect).
+This is a particular case of W0104 with its own message so you can easily
+disable it if you're using those strings as documentation, instead of
+comments.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0107</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Unnecessary pass statement</span>
+Used when a "pass" statement that can be avoided is encountered.)</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0108</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Lambda may not be necessary</span>
+Used when the body of a lambda expression is a function call on the same
+argument list as the lambda itself; such lambda expressions are in all but a
+few cases replaceable with the function being called in the body of the
+lambda.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0109</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Duplicate key %r in dictionary</span>
+Used when a dictionary expression binds the same key multiple times.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0122</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Use of the exec statement</span>
+Used when you use the "exec" statement, to discourage its usage. That doesn't
+mean you can not use it !</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0141</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Used builtin function %r</span>
+Used when a black listed builtin function is used (see the bad-function
+option). Usual black listed functions are the ones like map, or filter , where
+Python offers now some cleaner alternative like list comprehension.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0142</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Used * or *</span> magic*
+Used when a function or method is called using <span class="emphasis">*args</span> or <span class="emphasis">**kwargs</span> to
+dispatch arguments. This doesn't improve readability and should be used with
+care.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0150</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">%s statement in finally block may swallow exception</span>
+Used when a break or a return statement is found inside the finally clause of
+a try...finally block: the exceptions raised in the try clause will be
+silently swallowed instead of being re-raised.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0199</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Assert called on a 2-uple. Did you mean 'assert x,y'?</span>
+A call of assert on a tuple will always evaluate to true if the tuple is not
+empty, and will always evaluate to false if it is.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0102</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Black listed name "%s"</span>
+Used when the name is listed in the black list (unauthorized names).</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0103</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Invalid name "%s" (should match %s)</span>
+Used when the name doesn't match the regular expression associated to its type
+(constant, variable, class...).</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0111</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Missing docstring</span>
+Used when a module, function, class or method has no docstring. Some special
+methods like __init__ doesn't necessary require a docstring.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0112</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Empty docstring</span>
+Used when a module, function, class or method has an empty docstring (it would
+be too easy ;).</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+C0121</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Missing required attribute "%s"</span>
+Used when an attribute required for modules is missing.</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="id24"></a>13.3. Reports</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+RP0101</div>
+<div class="varlistitem">
+<div class="para">Statistics by type</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="exceptions-checker"></a>14. exceptions checker</div>
+
+<div class="sect2-title">
+<a name="id25"></a>14.1. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+E0701</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Bad except clauses order (%s)</span>
+Used when except clauses are not in the correct order (from the more specific
+to the more generic). If you don't fix the order, some exceptions may not be
+catched by the most specific handler.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0702</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Raising %s while only classes, instances or string are allowed</span>
+Used when something which is neither a class, an instance or a string is
+raised (i.e. a <span class="emphasis">TypeError</span> will be raised).</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0710</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Raising a new style class which doesn't inherit from BaseException</span>
+Used when a new style class which doesn't inherit from BaseException is raised
+since it's not possible with python &gt;= 2.5.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E0711</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">NotImplemented raised - should raise NotImplementedError</span>
+Used when NotImplemented is raised instead of NotImplementedError</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0701</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Raising a string exception</span>
+Used when a string exception is raised.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0702</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">No exception type(s) specified</span>
+Used when an except clause doesn't specify exceptions type to catch.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0703</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Catch "Exception"</span>
+Used when an except catches Exception instances.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0704</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Except doesn't do anything</span>
+Used when an except clause does nothing but "pass" and there is no "else"
+clause.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W0710</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Exception doesn't inherit from standard "Exception" class</span>
+Used when a custom exception class is raised but doesn't inherit from the
+builtin "Exception" class.</div>
+</div>
+</div>
+</div>
+
+
+<div class="sect1-title">
+<a name="newstyle-checker"></a>15. newstyle checker</div>
+
+<div class="sect2-title">
+<a name="id26"></a>15.1. Messages</div>
+
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+E1001</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Use __slots__ on an old style class</span>
+Used when an old style class use the __slots__ attribute.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E1002</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Use super on an old style class</span>
+Used when an old style class use the super builtin.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+E1003</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Bad first argument %r given to super class</span>
+Used when another argument than the current class is given as first argument
+of the super builtin.</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+W1001</div>
+<div class="varlistitem">
+<div class="para">
+<span class="emphasis">Use of "property" on an old style class</span>
+Used when PyLint detect the use of the builtin "property" on an old style
+class while this is relying on new style classes features</div>
+</div>
+</div>
+</div>
+
+
+

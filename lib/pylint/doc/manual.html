@@ -1,0 +1,848 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<div class="component-title-block"><div class="component-title">Pylint User Manual</div></div>
+
+<div class="para">This document is meant to be the reference user manual for <a class="" href="http://www.logilab.org/project/name/pylint">Pylint</a>.  This is a
+work in progress so some sections or parts may be missing (sometimes marked by a
+XXX).  If you think it's lacking some important information, please talk about
+it on the python-projects mailing list (see the <a class="" href="#mailing-lists">Mailing lists</a> section for
+more information about the list).</div>
+<div class="sect1-title">
+<a name="introduction"></a>1. Introduction</div>
+
+<div class="sect2-title">
+<a name="what-is-pylint"></a>1.1. What is pylint?</div>
+
+<div class="para">Pylint is a tool that checks for errors in python code, tries to enforce a
+coding standard and looks for smelling code. This is similar but nevertheless
+different from what <a class="" href="http://pychecker.sf.net">pychecker</a> provides, especially since pychecker explicitly
+does not bother with coding style. The default coding style used by pylint is
+close to <a class="" href="http://www.python.org/dev/peps/pep-0008/">PEP 008</a> (aka <a class="" href="http://www.python.org/doc/essays/styleguide.html">Guido's style guide</a>). For more information about
+code smells, refer to Martin Fowler's <a class="" href="http://www.refactoring.com/">refactoring book</a>
+</div>
+<div class="para">One important thing to note is that Pylint isn't smarter than you are: it may
+warn you about things that you have conscientiously done. That's for example
+because it tries to detect things that may be dangerous in a context, but maybe
+not in others, or because it checks for some things that you don't care
+about. Generally, you shouldn't expect pylint to be totally quiet about your
+code, so don't necessarily be alarmed if it gives you a hell lot of messages for
+your proudly(XXX) project ;)</div>
+<div class="para">Pylint will display a number of messages as it analyzes the code, as well as
+some statistics about the number of warnings and errors found in different
+files. The messages are classified under various categories such as errors and
+warnings (more below). If you run pylint twice, it will display the statistics
+from the previous run together with the ones from the current run, so that you
+can see if the code has improved or not.</div>
+<div class="para">Last but not least, the code is given an overall mark, based on the number an
+severity of the warnings and errors. This has proven to be very motivating for
+programmers.</div>
+
+<div class="sect2-title">
+<a name="installation"></a>1.2. Installation</div>
+
+<div class="sect3-title">
+<a name="dependencies"></a>1.2.1. Dependencies</div>
+
+<div class="para">Pylint requires the latest <a class="" href="http://www.logilab.org/project/name/astng">logilab-astng</a> and <a class="" href="http://www.logilab.org/project/name/common">logilab-common</a>
+packages. It should be compatible with any python version &gt;= 2.5.</div>
+
+<div class="sect3-title">
+<a name="distributions"></a>1.2.2. Distributions</div>
+
+<div class="para">The source tarball is available at <a class="" href="ftp://ftp.logilab.fr/pub/pylint">ftp://ftp.logilab.fr/pub/pylint</a>.</div>
+<div class="para">You may apt-get a debian package by adding</div>
+<div class="programlisting">
+deb ftp://ftp.logilab.org/pub/debian unstable/
+</div>
+<div class="para">to your <span class="emphasis">/etc/apt/sources.list</span> file. Pylint is also available in the
+standard Debian distribution (but add our public debian repository
+anyway if you want to get the latest releases and upgrades earlier)</div>
+<div class="para">Contributed RPM packages for pylint and logilab-common are available at
+<a class="" href="ftp://ftp.nest.pld-linux.org/test">ftp://ftp.nest.pld-linux.org/test</a>.</div>
+<div class="para">Pylint is also available in Gentoo, Fedora 4, Ubuntu, FreeBSD, Darwin
+(and maybe others, if you know about more OSes, please drop us a note!).</div>
+
+<div class="sect3-title">
+<a name="source-distribution-installation"></a>1.2.3. Source distribution installation</div>
+
+<div class="para">From the source distribution, extract the tarball, go to the extracted
+directory and simply run</div>
+<div class="programlisting">
+python setup.py install
+</div>
+<div class="para">You'll have to install dependencies in a similar way.</div>
+<div class="para">Windows users may get valuable information about pylint installation on
+<a class="" href="http://thinkhole.org/wp/2006/01/16/installing-pylint-on-windows/">this page</a>.</div>
+
+<div class="sect3-title">
+<a name="note-for-windows-users"></a>1.2.4. Note for Windows users</div>
+
+<div class="para">On Windows, once you have installed pylint, the command line usage is</div>
+<div class="programlisting">
+pylint.bat [options] module_or_package
+</div>
+<div class="para">But this will only work if <span class="emphasis">pylint.bat</span> is either in the current
+directory, or on your system path. (<span class="emphasis">setup.py</span> install install <span class="emphasis">python.bat</span>
+to the <span class="emphasis">Scripts</span> subdirectory of your Python installation -- e.g.
+C:/Python24/Scripts.) You can do any of the following to solve this:</div>
+<ol class="list">
+<li class="listitem">
+<div class="para">change to the appropriate directory before running pylint.bat</div>
+</li>
+<li class="listitem">
+<div class="para">add the Scripts directory to your path statement in your autoexec.bat
+file (this file is found in the root directory of your boot-drive)</div>
+</li>
+<li class="listitem">
+<div class="para">create a 'redirect' batch file in a directory actually on your
+systems path</div>
+</li>
+</ol>
+<div class="para">To effect (2), simply append the appropriate directory name to the PATH=
+statement in autoexec.bat. Be sure to use the Windows directory
+separator of ';' between entries. Then, once you have rebooted (this is
+necessary so that the new path statement will take effect when
+autoexec.bat is run), you will be able to invoke PyLint with
+pylint.bat on the command line.</div>
+<div class="para">(3) is the best solution. Once done, you can call pylint at the command
+line without the .bat, just as do non-Windows users by typing:</div>
+<div class="programlisting">
+pylint [options] module_or_package
+</div>
+<div class="para">To effect option (3), simply create a plain text file pylint.bat with
+the single line:</div>
+<div class="programlisting">
+C:/PythonDirectory/Scripts/pylint.bat
+</div>
+<div class="para">(where PythonDirectory is replaced by the actual Python installation
+directory on your system -- e.g. C:/Python24/Scripts/pylint.bat).</div>
+
+
+<div class="sect2-title">
+<a name="invoking-pylint"></a>1.3. Invoking pylint</div>
+
+<div class="para">Pylint is meant to be called from the command line. The usage is</div>
+<div class="programlisting">
+pylint [options] module_or_package
+</div>
+<div class="para">You should give pylint the name of a Python package or module. Pylint
+will <span class="literal">import</span> this package or module, so you should pay attention to
+your <span class="literal">PYTHONPATH</span>, since it is a common error to analyze an
+installed version of a module instead of the development version.</div>
+<div class="para">It is also possible to analyze python files, with a few
+restriction. The thing to keep in mind is that pylint will try to
+convert the file name to a module name, and only be able to process
+the file if it succeeds.</div>
+<div class="programlisting">
+pylint mymodule.py
+</div>
+<div class="para">should always work since the current working
+directory is automatically added on top of the python path</div>
+<div class="programlisting">
+pylint directory/mymodule.py
+</div>
+<div class="para">will work if "directory" is a python package (i.e. has an __init__.py
+file) or if "directory" is in the python path.</div>
+<div class="para">For more details on this see the Frequently Asked Questions.</div>
+<div class="para">You can also start a thin gui around pylint (require TkInter) by
+typing</div>
+<div class="programlisting">
+pylint-gui
+</div>
+<div class="para">This should open a window where you can enter the name of the package
+or module to check, at pylint messages will be displayed in the user
+interface.</div>
+<div class="para">It is also possible to call Pylint from an other Python program,
+thanks to <span class="literal">py_run()</span> function in <span class="literal">lint</span> module,
+assuming Pylint options are stored in <span class="literal">pylint_options</span> string, as</div>
+<div class="programlisting">
+from pylint import lint
+lint.py_run( pylint_options)
+</div>
+<div class="para">To silently run Pylint on a <span class="literal">module_name.py</span> module,
+and get its standart output and error:</div>
+<div class="programlisting">
+from pylint import lint
+(pylint_stdout, pylint_stderr) = lint.py_run( 'module_name.py', True)
+</div>
+
+<div class="sect2-title">
+<a name="pylint-output"></a>1.4. Pylint output</div>
+
+<div class="para">The default format for the output is raw text. But passing pylint the
+<span class="literal">--output-format=html</span> or <span class="literal">-h y</span> or <span class="literal">-o html</span> option will produce an HTML document.</div>
+<div class="para">There are several sections in pylint's output.</div>
+<div class="sect3-title">
+<a name="source-code-analysis-section"></a>1.4.1. Source code analysis section</div>
+
+<div class="para">For each python module,
+pylint will first display a few '*' characters followed by the name
+of the module. Then, a number of messages with the following
+format:</div>
+<div class="programlisting">
+MESSAGE_TYPE: LINE_NUM:[OBJECT:] MESSAGE
+</div>
+<div class="para">You can get another output format, useful since it's recognized by
+most editors or other development tools using the <span class="literal">--parseable=y</span>
+option.</div>
+<div class="para">The message type can be:</div>
+<div class="blockquote">
+<ul class="list">
+<li class="listitem">
+<div class="para">[R]efactor for a "good practice" metric violation</div>
+</li>
+<li class="listitem">
+<div class="para">[C]onvention for coding standard violation</div>
+</li>
+<li class="listitem">
+<div class="para">[W]arning for stylistic problems, or minor programming issues</div>
+</li>
+<li class="listitem">
+<div class="para">[E]rror for important programming issues (i.e. most probably bug)</div>
+</li>
+<li class="listitem">
+<div class="para">[F]atal for errors which prevented further processing</div>
+</li>
+</ul>
+</div>
+<div class="para">Sometimes the line of code which caused the error is displayed with
+a caret pointing to the error. This may be generalized in future
+versions of pylint.</div>
+<div class="para">Example (extracted from a run of pylint on itself...):</div>
+<div class="programlisting">
+************* Module pylint.checkers.format
+W: 50: Too long line (86/80)
+W:108: Operator not followed by a space
+     print &gt;&gt;sys.stderr, 'Unable to match %r', line
+            ^
+W:141: Too long line (81/80)
+W: 74:searchall: Unreachable code
+W:171:FormatChecker.process_tokens: Redefining built-in (type)
+W:150:FormatChecker.process_tokens: Too many local variables (20/15)
+W:150:FormatChecker.process_tokens: Too many branches (13/12)
+</div>
+
+<div class="sect3-title">
+<a name="reports-section"></a>1.4.2. Reports section</div>
+
+<div class="para">Following the analysis message, pylint will display a set of reports,
+each one focusing on a particular aspect of the project, such as number
+of messages by categories, modules dependencies...</div>
+<div class="para">For instance, the metrics report displays summaries gathered from the
+current run.</div>
+<div class="blockquote">
+<ul class="list">
+<li class="listitem">
+<div class="para">the number of processed modules</div>
+</li>
+<li class="listitem">
+<div class="para">for each module, the percentage of errors and warnings</div>
+</li>
+<li class="listitem">
+<div class="para">the total number of errors and warnings</div>
+</li>
+<li class="listitem">
+<div class="para">percentage of classes, functions and modules with docstrings, and
+a comparison from the previous run</div>
+</li>
+<li class="listitem">
+<div class="para">percentage of classes, functions and modules with correct name
+(according to the coding standard), and a comparison from the
+previous run</div>
+</li>
+<li class="listitem">
+<div class="para">a list of external dependencies found in the code, and where they appear</div>
+</li>
+</ul>
+</div>
+<div class="para">Also, a global evaluation for the code is computed, and an
+optional witty comment is displayed (if <span class="literal">--comment=y</span> was
+specified on the command line).</div>
+
+
+<div class="sect2-title">
+<a name="command-line-options"></a>1.5. Command line options</div>
+
+<div class="para">First of all, we have two basic (but useful) options.</div>
+<a name="id196100"></a><table class="table" cellspacing="0">
+<thead class="bordered-cells"><tr class="odd-line">
+<td class="title-cell" rowspan="1" colspan="1" style="text-align: center;">Option</td>
+<td class="title-cell" rowspan="1" colspan="1" style="text-align: center;">Description</td>
+</tr></thead>
+<tbody class="backgrounded-cells">
+<tr class="odd-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--version</span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">show program's version number and exit</div>
+</td>
+</tr>
+<tr class="even-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+-h</span><span class="command">
+, --help</span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">show help about the command line options</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="para">Pylint is architectured around several checkers. By default all
+checkers are enabled. You can disable a specific checker or some of its
+messages or messages categories by specifying
+<span class="literal">--disable=&lt;id&gt;</span>. A more general disable can be enabled with
+or disable all checkers using
+<span class="literal">--enable=w&lt;id&gt;</span>. See the list of available <a class="" href="features.html">features</a> for a
+description of provided checkers with their functionalities.
+The <span class="literal">--disable</span> and <span class="literal">--enable</span> options can be used with comma separated lists
+mixing checkers, message ids and categories like <span class="literal">-d C,W,E0611,design</span>
+</div>
+<div class="para">Each checker has some specific options, which can take either a yes/no
+value, an integer, a python regular expression, or a comma separated
+list of values (which are generally used to override a regular
+expression in special cases). For a full list of options, use <span class="literal">--help</span>
+</div>
+<div class="para">Specifying all the options suitable for your setup and coding
+standards can be tedious, so it is possible to use a rc file to
+specify the default values. Pylint looks for /etc/pylintrc and
+~/.pylintrc. The <span class="literal">--generate-rcfile</span> option will generate a
+commented configuration file according to the current configuration on
+standard output and exit. You can put other options before this one to
+use them in the configuration, or start with the default values and
+hand tune the configuration.</div>
+<div class="para">Other useful global options include:</div>
+<a name="id196238"></a><table class="table" cellspacing="0">
+<thead class="bordered-cells"><tr class="odd-line">
+<td class="title-cell" rowspan="1" colspan="1" style="text-align: center;">Option</td>
+<td class="title-cell" rowspan="1" colspan="1" style="text-align: center;">Description</td>
+</tr></thead>
+<tbody class="backgrounded-cells">
+<tr class="odd-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--zope</span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Initialize Zope products before starting</div>
+</td>
+</tr>
+<tr class="even-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--ignore=<span class="replaceable">file</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Add &lt;file&gt; (may be a directory) to the black
+list. It should be a base name, not a path.
+You may set this option multiple times.</div>
+</td>
+</tr>
+<tr class="odd-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--statistics=<span class="replaceable">y_or_n</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Compute statistics on collected data.</div>
+</td>
+</tr>
+<tr class="even-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--persistent=<span class="replaceable">y_or_n</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Pickle collected data for later comparisons.</div>
+</td>
+</tr>
+<tr class="odd-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--comment=<span class="replaceable">y_or_n</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Add a comment according to your evaluation note.</div>
+</td>
+</tr>
+<tr class="even-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--parseable=<span class="replaceable">y_or_n</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Use a parseable output format.</div>
+</td>
+</tr>
+<tr class="odd-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--html=<span class="replaceable">y_or_n</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Use HTML as output format instead of text.</div>
+</td>
+</tr>
+<tr class="even-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--list-msgs</span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Generate pylint's messages.</div>
+</td>
+</tr>
+<tr class="odd-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--full-documentation</span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Generate pylint's full documentation, in reST format.</div>
+</td>
+</tr>
+</tbody>
+</table>
+
+<div class="sect2-title">
+<a name="daily-pylint-usage"></a>1.6. Daily pylint usage</div>
+
+<div class="para">What pylint says is not to be taken as gospel. While getting as
+few false positives for errors as possible is a goal for us -- and
+python makes it hard enough, it is not the case for warnings.</div>
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+Quoting Alexandre</div>
+<div class="varlistitem">
+<div class="para">My usage pattern for pylint is to generally run pylint -e quite often to
+get stupid errors flagged before launching an application (or before
+committing). I generally run pylint with all the bells and whistles
+activated some time before a release, when I want to cleanup the code.
+And when I do that I simply ignore tons of the false warnings (and I
+can do that without being driven mad by this dumb program which is not
+smart enough to understand the dynamically of Python because I only run
+it once or twice a week in this mode)</div>
+</div>
+</div>
+<div class="varlistentry">
+<div class="varterm">
+Quoting Marteen Ter Huurne</div>
+<div class="varlistitem">
+<div class="para">In our project we just accepted that we have to make some modifications in our
+code to please PyLint:</div>
+<ul class="list">
+<li class="listitem">
+<div class="para">stick to more naming conventions (unused variables ending in underscores,
+mix-in class names ending in "Mixin")</div>
+</li>
+<li class="listitem">
+<div class="para">making all abstract methods explicit (rather than just not defining them in
+the superclass)</div>
+</li>
+<li class="listitem">
+<div class="para">for messages which are useful in general, but not in a specific case: add "#
+pylint: disable=X0123" comments</div>
+</li>
+<li class="listitem">
+<div class="para">for PyLint bugs: add "#pylint: disable=X0123" comments</div>
+</li>
+<li class="listitem">
+<div class="para">for PyLint limitations: add "#pylint: disable=X0123" comments
+(for instance Twisted's modules create a lot of definitions dynamically so
+PyLint does not know about them)</div>
+</li>
+</ul>
+<div class="para">The effort is worth it, since PyLint helps us a lot in keeping the code clean
+and finding errors early. Although most errors found by PyLint would also be
+found by the regression tests, by fixing them before committing, we save time.
+And our regression tests do not cover all code either, just the most complex
+parts.</div>
+</div>
+</div>
+</div>
+
+<div class="sect2-title">
+<a name="bug-reports-feedback"></a>1.7. Bug reports, feedback</div>
+
+<div class="para">You think you have found a bug in Pylint? Well, this may be the case
+since Pylint is under development. Please take the time to send a bug
+report to <a class="" href="mailto:python-projects@logilab.org">python-projects@logilab.org</a> if you've not found it already reported on
+the <a class="" href="http://www.logilab.org/project/name/pylint">tracker page</a>. This mailing list is also a nice place to
+discuss Pylint issues, see below for more information about pylint's related
+lists.</div>
+<div class="para">You can check for already reported bugs, planned features on pylint's tracker
+web page: <a class="" href="http://www.logilab.org/project/name/pylint">http://www.logilab.org/project/name/pylint</a>
+</div>
+<div class="para">Notice that if you don't find something you have expected in pylint's
+tracker page, it may be on the tracker page of one of its dependencies, namely
+astng and common:</div>
+<ul class="list">
+<li class="listitem">
+<div class="para"><a class="" href="http://www.logilab.org/project/name/logilab-astng">http://www.logilab.org/project/name/logilab-astng</a></div>
+</li>
+<li class="listitem">
+<div class="para"><a class="" href="http://www.logilab.org/project/name/logilab-common">http://www.logilab.org/project/name/logilab-common</a></div>
+</li>
+</ul>
+
+<div class="sect2-title">
+<a name="mailing-lists"></a>1.8. Mailing lists</div>
+
+<div class="para">Use the <a class="" href="mailto:python-projects@logilab.org">python-projects@logilab.org</a> mailing list for anything related
+to Pylint. This is in most cases better than sending an email directly
+to the author, since others will benefit from the exchange, and you'll
+be more likely answered by someone subscribed to the list. This is a
+moderated mailing list, so if you're not subscribed email you send will have to
+be validated first before actually being sent on the list.</div>
+<div class="para">You can subscribe to this mailing list at
+<a class="" href="http://lists.logilab.org/mailman/listinfo/python-projects">http://lists.logilab.org/mailman/listinfo/python-projects</a>
+</div>
+<div class="para">Archives are available at
+<a class="" href="http://lists.logilab.org/pipermail/python-projects/">http://lists.logilab.org/pipermail/python-projects/</a>
+</div>
+<div class="para">If you prefer speaking french instead of english, you can use the
+generic <a class="" href="mailto:forum-fr@logilab.org">forum-fr@logilab.org</a> mailing list:</div>
+<ul class="list">
+<li class="listitem">
+<div class="para">(un)subscribe: <a class="" href="http://lists.logilab.org/mailman/listinfo/forum-fr">http://lists.logilab.org/mailman/listinfo/forum-fr</a>
+</div>
+</li>
+<li class="listitem">
+<div class="para">archives: <a class="" href="http://lists.logilab.org/pipermail/forum-fr">http://lists.logilab.org/pipermail/forum-fr</a>
+</div>
+</li>
+</ul>
+<div class="para">Notice though that this list has a very low traffic since most pylint related
+discussions are done on the python-projects mailing list.</div>
+
+
+<div class="sect1-title">
+<a name="advanced-usage"></a>2. Advanced usage</div>
+
+<div class="sect2-title">
+<a name="base-configuration"></a>2.1. Base configuration</div>
+
+<div class="para">To be written...</div>
+
+<div class="sect2-title">
+<a name="environment"></a>2.2. Environment</div>
+
+<div class="para">To be written...</div>
+
+<div class="sect2-title">
+<a name="messages-control"></a>2.3. Messages control</div>
+
+<div class="para">An example available from the examples directory:</div>
+<div class="programlisting">
+"""pylint option block-disable"""
+
+__revision__ = None
+
+class Foo(object):
+    """block-disable test"""
+
+    def __init__(self):
+        pass
+
+    def meth1(self, arg):
+        """this issues a message"""
+        print self
+
+    def meth2(self, arg):
+        """and this one not"""
+        # pylint: disable=W0613
+        print self\
+              + "foo"
+
+    def meth3(self):
+        """test one line disabling"""
+        # no error
+        print self.bla # pylint: disable=E1101
+        # error
+        print self.blop
+
+    def meth4(self):
+        """test re-enabling"""
+        # pylint: disable=E1101
+        # no error
+        print self.bla
+        print self.blop
+        # pylint: enable=E1101
+        # error
+        print self.blip
+
+    def meth5(self):
+        """test IF sub-block re-enabling"""
+        # pylint: disable=E1101
+        # no error
+        print self.bla
+        if self.blop:
+            # pylint: enable=E1101
+            # error
+            print self.blip
+        else:
+            # no error
+            print self.blip
+        # no error
+        print self.blip
+
+    def meth6(self):
+        """test TRY/EXCEPT sub-block re-enabling"""
+        # pylint: disable=E1101
+        # no error
+        print self.bla
+        try:
+             pylint: enable=E1101
+            # error
+            print self.blip
+        except UndefinedName: # pylint: disable=E0602
+            # no error
+            print self.blip
+        # no error
+        print self.blip
+
+    def meth7(self):
+        """test one line block opening disabling"""
+        if self.blop: # pylint: disable=E1101
+            # error
+            print self.blip
+        else:
+            # error
+            print self.blip
+        # error
+        print self.blip
+
+
+    def meth8(self):
+        """test late disabling"""
+        # error
+        print self.blip
+        # pylint: disable=E1101
+        # no error
+        print self.bla
+        print self.blop
+</div>
+
+
+<div class="sect1-title">
+<a name="about-analysis"></a>3. About analysis</div>
+
+<div class="sect2-title">
+<a name="pylint-heuristics"></a>3.1. Pylint heuristics</div>
+
+<div class="para">To be written...</div>
+
+<div class="sect2-title">
+<a name="about-astng-inference"></a>3.2. About astng inference</div>
+
+<div class="para">To be written...</div>
+
+
+<div class="sect1-title">
+<a name="enhancing-pylint"></a>4. Enhancing Pylint</div>
+
+<div class="sect2-title">
+<a name="writing-your-own-checker"></a>4.1. Writing your own checker</div>
+
+<div class="para">You can find some simple examples in the examples
+directory of the distribution (custom.py and custom_raw.py). I'll try to
+quickly explain the essentials here.</div>
+<div class="para">First, there are two kinds of checkers :
+* raw checkers, which are analysing each module as a raw file stream
+* ast checkers, which are working on an ast representation of the module</div>
+<div class="para">The ast representation used is an extension of the one provided with the
+standard python distribution in the <a class="" href="http://python.org/doc/current/lib/module-compiler.html">compiler package</a>. The extension
+adds additional information and methods on the tree nodes to ease
+navigation and code introspection.</div>
+<div class="para">An AST checker is a visitor, and should implement
+visit_&lt;lowered class name&gt;
+leave_&lt;lowered class name&gt;
+methods for the nodes it's interested in. To get description of the different
+classes used in an ast tree, look at the <span class="emphasis">compiler.ast documentation</span>.
+Checkers are ordered by priority. For each module, pylint's engine:</div>
+<ol class="list">
+<li class="listitem">
+<div class="para">give the module source file as a stream to raw checkers</div>
+</li>
+<li class="listitem">
+<div class="para">get an ast representation for the module</div>
+</li>
+<li class="listitem">
+<div class="para">make a depth first descent of the tree, calling visit_&lt;&gt; on each AST
+checker when entering a node, and living_&lt;&gt; on the back traversal</div>
+</li>
+</ol>
+<div class="para">Notice that the source code is probably the best source of
+documentation, it should be clear and well documented. Don't hesitate to
+ask for any information on the python-projects mailing list.</div>
+
+<div class="sect2-title">
+<a name="contribute"></a>4.2. Contribute !</div>
+
+<div class="para">All our software is developed using the <a class="" href="http://www.selenic.com/mercurial/">mercurial</a> version control
+system. This is a very cool distributed vcs and its usage is very similar to
+other ones such as cvs or subversion (though the distributed feature introduced
+some different usage patterns). See mercurial home page for installation on
+your computer and basic usage. Note that it's very easy to send us patches using
+<span class="emphasis">hg email</span> command ;).</div>
+<div class="para">You can get the in-development pylint source code from our public <a class="" href="http://www.selenic.com/mercurial/">mercurial</a>
+repository:</div>
+<div class="para"><a class="" href="http://www.logilab.org/src/pylint">http://www.logilab.org/src/pylint</a></div>
+<div class="para">The same is true for pylint dependencies (if you use pylint code from the
+repository, you should usually use code from the repository as well for astng
+and common):</div>
+<div class="para">
+<a class="" href="http://www.logilab.org/src/logilab/astng">http://www.logilab.org/src/logilab/astng</a>
+<a class="" href="http://www.logilab.org/src/logilab/common">http://www.logilab.org/src/logilab/common</a>
+</div>
+
+<div class="sect2-title">
+<a name="contribution-instructions"></a>4.3. Contribution Instructions</div>
+
+<div class="para">Got a patch for pylint?  There a few steps you must take to make sure your
+patch gets accepted.</div>
+<ul class="list">
+<li class="listitem">
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+<span class="varname">Test your code</span>
+</div>
+<div class="varlistitem">
+<ul class="list">
+<li class="listitem">
+<div class="para">Pylint keeps a set of unit tests in the /test directory. To get your
+patch accepted you must write (or change) a test input file and message
+file in the appropriate input and messages folders.</div>
+</li>
+<li class="listitem">
+<div class="para">In the test folder of pylint run ./fulltest.sh (python version), make sure
+all tests pass before submitting a patch</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li class="listitem">
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+<span class="varname">Create a diff file</span>
+</div>
+<div class="varlistitem">
+<ul class="list">
+<li class="listitem">
+<div class="para">To create a diff from the command line invoke (from a directory under
+version control)</div>
+<div class="programlisting">
+hg diff  &gt; &lt;yourname&gt;.diff
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li class="listitem">
+<div class="para">E-mail the mailing list with your diff file</div>
+</li>
+</ul>
+
+
+<div class="sect1-title">
+<a name="other-information"></a>5. Other information</div>
+
+<div class="sect2-title">
+<a name="ide-integration"></a>5.1. IDE integration</div>
+
+<div class="para">Pylint is integrated in the following editors/IDEs:</div>
+<ul class="list">
+<li class="listitem">
+<div class="para">emacs (of course)</div>
+</li>
+<li class="listitem">
+<div class="para">eric3</div>
+</li>
+<li class="listitem">
+<div class="para">eclipse (using the <a class="" href="http://pydev.sourceforge.net">pydev</a> plugin, see also
+<a class="" href="http://msdl.cs.mcgill.ca/MSDL/people/denis/meetings/pythonDev">http://msdl.cs.mcgill.ca/MSDL/people/denis/meetings/pythonDev</a>)</div>
+</li>
+</ul>
+<div class="para">To use pylint from within vim, see
+<a class="" href="http://www.vim.org/scripts/script.php?script_id=891">http://www.vim.org/scripts/script.php?script_id=891</a>
+</div>
+<div class="para">To use pylint from within <a class="" href="http://www.activestate.com/Products/Komodo/">komodo</a>, see
+<a class="" href="http://mateusz.loskot.net/2006/01/15/running-pylint-from-komodo/">http://mateusz.loskot.net/2006/01/15/running-pylint-from-komodo/</a>
+</div>
+<div class="para">To use pylint from within <a class="" href="http://www.gnome.org/projects/gedit/">gedit</a>, see
+<a class="" href="http://live.gnome.org/Gedit/PylintPlugin">http://live.gnome.org/Gedit/PylintPlugin</a>
+</div>
+<div class="para">To use pylint from within <a class="" href="http://www.wingware.com/">WingIDE</a>, see
+<a class="" href="http://www.wingware.com/doc/edit/pylint">http://www.wingware.com/doc/edit/pylint</a>
+</div>
+<div class="para">Pylint is also integrated in <a class="" href="http://code.google.com/p/spyderlib/">spyder</a>, a matlab-like environnement.</div>
+
+<div class="sect2-title">
+<a name="some-projects-using-pylint"></a>5.2. Some projects using Pylint</div>
+
+<div class="para">The following projects are known to use pylint to help develop better
+code:</div>
+<ul class="list">
+<li class="listitem">
+<div class="para">OSAF Chandler (<a class="" href="http://www.osafoundation.org/">http://www.osafoundation.org/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">Xen (<a class="" href="http://www.xensource.com/">http://www.xensource.com/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">CPS (<a class="" href="http://www.nuxeo.org">http://www.nuxeo.org</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">ERP5 (<a class="" href="http://www.erp5.org/">http://www.erp5.org/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">pyxmpp (<a class="" href="http://pyxmpp.jabberstudio.org/">http://pyxmpp.jabberstudio.org/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">mercurial</div>
+</li>
+<li class="listitem">
+<div class="para">eXe (<a class="" href="http://exelearning.org/">http://exelearning.org/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">PrimaGIS (<a class="" href="http://www.primagis.org">http://www.primagis.org</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">python-cdd (<a class="" href="https://projetos.ossystems.com.br/projects/python-cdd">https://projetos.ossystems.com.br/projects/python-cdd</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">CDSWare (<a class="" href="http://cdsware.cern.ch/">http://cdsware.cern.ch/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">ASE (<a class="" href="http://dcwww.camp.dtu.dk/campos/ASE/intro.html">http://dcwww.camp.dtu.dk/campos/ASE/intro.html</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">RunJob (<a class="" href="http://projects.fnal.gov/runjob/">http://projects.fnal.gov/runjob/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">Slugathon (<a class="" href="http://slugathon.python-hosting.com/">http://slugathon.python-hosting.com/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">Topographica (<a class="" href="http://topographica.org/Home/index.html">http://topographica.org/Home/index.html</a>) (at least they intend to do so)</div>
+</li>
+<li class="listitem">
+<div class="para"><a class="" href="http://browsershots.org">http://browsershots.org</a></div>
+</li>
+<li class="listitem">
+<div class="para">many more...</div>
+</li>
+</ul>
+<div class="para">Also notice that the <a class="" href="http://cheesecake.sourceforge.net/">CheeseCake</a> kwalitee reporting tool uses pylint to
+analyze the source code.</div>
+
+
+

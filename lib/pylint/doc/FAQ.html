@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<div class="component-title-block"><div class="component-title">Frequently Asked Questions</div></div>
+
+<div class="sect1-title">
+<a name="about-pylint"></a>1. 1. About Pylint</div>
+
+<div class="sect2-title">
+<a name="what-is-pylint"></a>1.1. 1.1 What is Pylint?</div>
+
+<div class="para">Pylint is a <a class="" href="http://en.wikipedia.org/wiki/Static_code_analysis">static code checker</a>, meaning it can analyse your code without
+actually running it. Pylint checks for errors, tries to enforce a coding
+standard, and tries to enforce a coding style.</div>
+
+<div class="sect2-title">
+<a name="how-is-pylint-different-from-pychecker"></a>1.2. 1.2 How is Pylint different from Pychecker?</div>
+
+<div class="para">A major difference between Pylint and <a class="" href="http://pychecker.sf.net">Pychecker</a> is that Pylint checks for
+style issues, while Pychecker explicitly does not. There are a few other
+differences, such as the fact that Pylint does not import live modules while
+Pychecker does (see <a class="" href="#why-does-pychecker-catch-problems-with-imports-that-pylint-doesn-t">6.2 Why does Pychecker catch problems with imports that
+Pylint doesn't?</a>).</div>
+
+<div class="sect2-title">
+<a name="who-wrote-pylint"></a>1.3. 1.3 Who wrote Pylint?</div>
+
+<div class="para">Pylint's main author and maintainer is Sylvain Thénault. Pylint's development
+is funded by <a class="" href="http://www.logilab.fr/">Logilab</a>. For a full list of contributors, see the "Contributors"
+section of Pylint's README file.</div>
+
+<div class="sect2-title">
+<a name="who-uses-pylint"></a>1.4. 1.4 Who uses Pylint?</div>
+
+<div class="para">In addition to many individuals, the following projects are known to use pylint
+to help develop better
+code:</div>
+<ul class="list">
+<li class="listitem">
+<div class="para">OSAF Chandler (<a class="" href="http://www.osafoundation.org/">http://www.osafoundation.org/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">Xen (<a class="" href="http://www.xensource.com/">http://www.xensource.com/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">CPS (<a class="" href="http://www.nuxeo.org">http://www.nuxeo.org</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">ERP5 (<a class="" href="http://www.erp5.org/">http://www.erp5.org/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">pyxmpp (<a class="" href="http://pyxmpp.jabberstudio.org/">http://pyxmpp.jabberstudio.org/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">mercurial</div>
+</li>
+<li class="listitem">
+<div class="para">eXe (<a class="" href="http://exelearning.org/">http://exelearning.org/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">PrimaGIS (<a class="" href="http://www.primagis.org">http://www.primagis.org</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">python-cdd (<a class="" href="http://projetos.ossystems.com.br/python-cdd/">http://projetos.ossystems.com.br/python-cdd/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">CDSWare (<a class="" href="http://cdsware.cern.ch/">http://cdsware.cern.ch/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">ASE (<a class="" href="http://dcwww.camp.dtu.dk/campos/ASE/intro.html">http://dcwww.camp.dtu.dk/campos/ASE/intro.html</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">RunJob (<a class="" href="http://projects.fnal.gov/runjob/">http://projects.fnal.gov/runjob/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">Slugathon (<a class="" href="http://slugathon.python-hosting.com/">http://slugathon.python-hosting.com/</a>)</div>
+</li>
+<li class="listitem">
+<div class="para">Topographica (<a class="" href="http://topographica.org/Home/index.html">http://topographica.org/Home/index.html</a>) (at least
+they intend to do so)</div>
+</li>
+<li class="listitem">
+<div class="para"><a class="" href="http://browsershots.org">http://browsershots.org</a></div>
+</li>
+</ul>
+
+
+<div class="sect1-title">
+<a name="installation"></a>2. 2. Installation</div>
+
+<div class="sect2-title">
+<a name="how-do-i-install-pylint"></a>2.1. 2.1 How do I install Pylint?</div>
+
+<div class="para">The easiest way to install Pylint, if you have the <a class="" href="http://pypi.python.org/pypi/setuptools">setuptools</a> package, is to
+invoke</div>
+<div class="programlisting">
+easy_install pylint
+</div>
+<div class="para">Otherwise, you'll have to download the source for Pylint and its dependencies
+from the Logilab site, or through Pylint's repository. See the user manual for
+detailed installation instructions.</div>
+
+<div class="sect2-title">
+<a name="what-kind-of-versioning-system-does-pylint-use"></a>2.2. 2.2 What kind of versioning system does Pylint use?</div>
+
+<div class="para">Pylint uses the <a class="" href="http://mercurial.selenic.com/">Mercurial</a> distributed version control system. The URL of the
+repository is:  <a class="" href="http://www.logilab.org/hg/pylint">http://www.logilab.org/hg/pylint</a>. To get the latest version of
+Pylint from the repository, simply invoke</div>
+<div class="programlisting">
+hg clone http://www.logilab.org/hg/pylint
+</div>
+
+<div class="sect2-title">
+<a name="what-are-pylint-s-dependencies"></a>2.3. 2.3 What are Pylint's dependencies?</div>
+
+<div class="para">Pylint requires the latest <a class="" href="http://www.logilab.org/project/name/astng">logilab-astng</a> and <a class="" href="http://www.logilab.org/project/name/common">logilab-common</a>
+packages. It should be compatible with any python version greater than
+2.2.0.</div>
+
+
+<div class="sect1-title">
+<a name="running-pylint"></a>3. 3. Running Pylint</div>
+
+<div class="sect2-title">
+<a name="can-i-give-pylint-a-file-as-an-argument-instead-of-a-module"></a>3.1. 3.1 Can I give pylint a file as an argument instead of a module?</div>
+
+<div class="para">Pylint expects the name of a package or module as its argument. As a
+convenience,
+you can give it a file name if it's possible to guess a module name from
+the file's path using the python path. Some examples :</div>
+<div class="para">"pylint mymodule.py" should always work since the current working
+directory is automatically added on top of the python path</div>
+<div class="para">"pylint directory/mymodule.py" will work if "directory" is a python
+package (i.e. has an __init__.py file) or if "directory" is in the
+python path.</div>
+<div class="para">"pylint /whatever/directory/mymodule.py" will work if either:</div>
+<div class="blockquote">
+<ul class="list">
+<li class="listitem">
+<div class="para">"/whatever/directory" is in the python path</div>
+</li>
+<li class="listitem">
+<div class="para">your cwd is "/whatever/directory"</div>
+</li>
+<li class="listitem">
+<div class="para">"directory" is a python package and "/whatever" is in the python
+path</div>
+</li>
+<li class="listitem">
+<div class="para">"directory" is a python package and your cwd is "/whatever" and so
+on...</div>
+</li>
+</ul>
+</div>
+
+<div class="sect2-title">
+<a name="where-is-the-persistent-data-stored-to-compare-between-successive-runs"></a>3.2. 3.2 Where is the persistent data stored to compare between successive runs?</div>
+
+<div class="para">Analysis data are stored as a pickle file in a directory which is
+localized using the following rules:</div>
+<ul class="list">
+<li class="listitem">
+<div class="para">value of the PYLINTHOME environment variable if set</div>
+</li>
+<li class="listitem">
+<div class="variablelist">
+<div class="varlistentry">
+<div class="varterm">
+<span class="varname">".pylint.d" subdirectory of the user's home directory if it is found</span>
+</div>
+<div class="varlistitem">
+<div class="para">(not always findable on Windows platforms)</div>
+</div>
+</div>
+</div>
+</li>
+<li class="listitem">
+<div class="para">".pylint.d" directory in the current directory</div>
+</li>
+</ul>
+
+<div class="sect2-title">
+<a name="how-do-i-find-the-option-name-for-pylintrc-corresponding-to-a-specific-command-line-option"></a>3.3. 3.3 How do I find the option name (for pylintrc) corresponding to a specific command line option?</div>
+
+<div class="para">You can always generate a sample pylintrc file with --generate-rcfile
+Every option present on the command line before this will be included in
+the rc file</div>
+<div class="para">For example:</div>
+<div class="programlisting">
+pylint --disable=W0702,C0103 --class-rgx='[A-Z][a-z]+' --generate-rcfile
+</div>
+
+<div class="sect2-title">
+<a name="i-d-rather-not-run-pylint-from-the-command-line-can-i-integrate-it-with-my-editor"></a>3.4. 3.4 I'd rather not run Pylint from the command line. Can I integrate it with my editor?</div>
+
+<div class="para">Yes! Pylint can be integrated with many popular editors and IDEs. The following
+include Pylint by default:</div>
+<ul class="list">
+<li class="listitem">
+<div class="para">emacs (of course)</div>
+</li>
+<li class="listitem">
+<div class="para">eric3</div>
+</li>
+<li class="listitem">
+<div class="para">eclipse (using the <a class="" href="http://pydev.sourceforge.net">pydev</a> plugin, see also
+<a class="" href="http://msdl.cs.mcgill.ca/MSDL/people/denis/meetings/pythonDev">http://msdl.cs.mcgill.ca/MSDL/people/denis/meetings/pythonDev</a>)</div>
+</li>
+</ul>
+<div class="para">To use pylint from within vim, see
+<a class="" href="http://www.gonzo.kiev.ua/projects/pylint.vim">http://www.gonzo.kiev.ua/projects/pylint.vim</a>
+</div>
+<div class="para">To use pylint from within <a class="" href="http://www.activestate.com/Products/Komodo/">komodo</a>, see
+<a class="" href="http://mateusz.loskot.net/2006/01/15/running-pylint-from-komodo/">http://mateusz.loskot.net/2006/01/15/running-pylint-from-komodo/</a>
+</div>
+<div class="para">To use pylint from within <a class="" href="http://www.gnome.org/projects/gedit/">gedit</a>, see
+<a class="" href="http://live.gnome.org/Gedit/PylintPlugin">http://live.gnome.org/Gedit/PylintPlugin</a>
+</div>
+<div class="para">To use pylint from within <a class="" href="http://www.wingware.com/">WingIDE</a>, see
+<a class="" href="http://www.wingware.com/doc/edit/pylint">http://www.wingware.com/doc/edit/pylint</a>
+</div>
+
+
+<div class="sect1-title">
+<a name="message-control"></a>4. 4. Message Control</div>
+
+<div class="sect2-title">
+<a name="is-it-possible-to-locally-disable-a-particular-message"></a>4.1. 4.1 Is it possible to locally disable a particular message?</div>
+
+<div class="para">Yes, this feature has been added in pylint 0.11. This may be done by
+adding "#pylint: disable=W0123,E4567" at the desired block level
+or at the end of the desired line of code</div>
+
+<div class="sect2-title">
+<a name="why-do-i-get-a-lot-of-spurious-unused-variables-messages-when-using-psyobj-from-psyco"></a>4.2. 4.2 Why do I get a lot of spurious "unused variables messages" when using psyobj from <a class="" href="http://psyco.sf.net">psyco</a>?</div>
+
+<div class="para">This is actually due to a bug in psyco, making the locals()
+function for objects inheriting from <span class="emphasis">psyobj</span> returning an empty
+dictionary. For the moment, the only way to fix this is to use the
+PYLINT_IMPORT environment variable to not use psyco during pylint
+checking. Sample code</div>
+<div class="programlisting">
+import os
+try:
+        if os.environ.has_key('PYLINT_IMPORT'):
+                raise ImportError()
+from psyco.classes import psyobj
+except ImportError:
+        class psyobj:
+                pass
+</div>
+<div class="para">NOTICE: this problem should not occur with pylint &gt;= 0.5 since from
+this version pylint is not looking anymore for information in living
+objects (i.e. it no longer imports analysed modules)</div>
+
+<div class="sect2-title">
+<a name="i-have-a-callback-function-where-i-have-no-control-over-received-arguments-how-do-i-avoid-getting-unused-argument-warnings"></a>4.3. 4.3 I have a callback function where I have no control over received arguments. How do I avoid getting unused argument warnings?</div>
+
+<div class="para">Prefix (ui) the callback's name by <span class="emphasis">cb_</span>, as in cb_onclick(...). By
+doing so arguments usage won't be checked. Another solution is to
+use one of the names defined in the "dummy-variables" configuration
+variable for unused argument ("_" and "dummy" by default).</div>
+
+<div class="sect2-title">
+<a name="is-there-a-way-to-disable-a-message-for-a-particular-module-only"></a>4.4. 4.4 Is there a way to disable a message for a particular module only?</div>
+
+<div class="para">Yes, you can disable or enable (globally disabled) messages at the
+module level by adding the corresponding option in a comment at the
+top of the file:</div>
+<div class="programlisting">
+# pylint: disable=W0401, E0202
+# pylint: enable-msg=C0302
+</div>
+
+<div class="sect2-title">
+<a name="what-is-the-format-of-the-configuration-file"></a>4.5. 4.5 What is the format of the configuration file?</div>
+
+<div class="para">pylint uses ConfigParser from the standard library to parse the configuration file.
+It means that if you need to disable a lot of messages, you can use tricks like:</div>
+<div class="programlisting">
+disable= W0401, # because I do not want it
+ E0202, # I have a good reason, trust me
+ C0302  # that's it
+</div>
+
+
+<div class="sect1-title">
+<a name="classes-and-inheritance"></a>5. 5. Classes and Inheritance</div>
+
+<div class="sect2-title">
+<a name="when-is-pylint-considering-a-class-as-an-interface"></a>5.1. 5.1 When is pylint considering a class as an interface?</div>
+
+<div class="para">A class is considered as an interface if there is a class named "Interface"
+somewhere in its inheritance tree.</div>
+
+<div class="sect2-title">
+<a name="when-is-pylint-considering-that-a-class-is-implementing-a-given-interface"></a>5.2. 5.2 When is pylint considering that a class is implementing a given interface?</div>
+
+<div class="para">Pylint is using the Zope 2 interfaces conventions, and so is
+considering that a class is implementing interfaces listed in its
+__implements__ attribute.</div>
+
+<div class="sect2-title">
+<a name="when-is-pylint-considering-a-class-as-an-abstract-class"></a>5.3. 5.3 When is pylint considering a class as an abstract class?</div>
+
+<div class="para">A class is considered as an abstract class if at least one of its
+methods is doing nothing but raising NotImplementedError.</div>
+
+<div class="sect2-title">
+<a name="how-do-i-avoid-access-to-undefined-member-messages-in-my-mixin-classes"></a>5.4. 5.4 How do I avoid "access to undefined member" messages in my mixin classes?</div>
+
+<div class="para">To do so you have to set the ignore-mixin-members option to
+"yes" (this is the default value) and to name your mixin class with
+a name which ends with "mixin" (whatever case).</div>
+
+
+<div class="sect1-title">
+<a name="troubleshooting"></a>6. 6. Troubleshooting</div>
+
+<div class="sect2-title">
+<a name="pylint-gave-my-code-a-negative-rating-out-of-ten-that-can-t-be-right"></a>6.1. 6.1 Pylint gave my code a negative rating out of ten. That can't be right!</div>
+
+<div class="para">Even though the final rating Pylint renders is nominally out of ten, there's no
+lower bound on it. By default, the formula to calculate score is</div>
+<div class="programlisting">
+10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10)
+</div>
+<div class="para">However, this option can be changed in the pylint rc file. If having negative
+values really bugs you, you can set the formula to be the minimum of 0 and the
+above expression.</div>
+
+<div class="sect2-title">
+<a name="why-does-pychecker-catch-problems-with-imports-that-pylint-doesn-t"></a>6.2. 6.2 Why does Pychecker catch problems with imports that Pylint doesn't?</div>
+
+<div class="para">pychecker and pylint use different approaches.  pychecker
+imports the modules and rummages around in the result, hence it sees my
+mangled sys.path.  pylint doesn't import any of the candidate modules and
+thus doesn't include any of import's side effects (good and bad).  It
+traverses an AST representation of the code.</div>
+
+<div class="sect2-title">
+<a name="i-think-i-found-a-bug-in-pylint-what-should-i-do"></a>6.3. 6.3 I think I found a bug in Pylint. What should I do?</div>
+
+<div class="para">First, you might wish to check Pylint's ticketing system (the 'Tickets' tab at
+<a class="" href="http://www.logilab.org/project/pylint">http://www.logilab.org/project/pylint</a>), to make sure it hasn't been reported
+already. If it hasn't, please send a bug report to <a class="" href="mailto:python-projects@logilab.org">python-projects@logilab.org</a>.</div>
+<div class="para">Notice that if you don't find something you have expected in pylint's
+tracker page, it may be on the tracker page of one of its dependencies, namely
+astng and common:</div>
+<ul class="list">
+<li class="listitem">
+<div class="para"><a class="" href="http://www.logilab.org/project/name/logilab-astng">http://www.logilab.org/project/name/logilab-astng</a></div>
+</li>
+<li class="listitem">
+<div class="para"><a class="" href="http://www.logilab.org/project/name/logilab-common">http://www.logilab.org/project/name/logilab-common</a></div>
+</li>
+</ul>
+
+<div class="sect2-title">
+<a name="i-have-a-question-about-pylint-that-isn-t-answered-here"></a>6.4. 6.4 I have a question about Pylint that isn't answered here.</div>
+
+<div class="para">The <a class="" href="mailto:python-projects@logilab.org">python-projects@logilab.org</a> mailing list is a great place to discuss and
+ask questions about Pylint. This is a
+moderated mailing list, so if you're not subscribed email you send will have to
+be validated first before actually being sent on the list.</div>
+<div class="para">You can subscribe to this mailing list at
+<a class="" href="http://lists.logilab.org/mailman/listinfo/python-projects">http://lists.logilab.org/mailman/listinfo/python-projects</a>
+</div>
+<div class="para">Archives are available at
+<a class="" href="http://lists.logilab.org/pipermail/python-projects/">http://lists.logilab.org/pipermail/python-projects/</a>
+</div>
+<div class="para">If you prefer speaking french instead of english, you can use the
+generic <a class="" href="mailto:forum-fr@logilab.org">forum-fr@logilab.org</a> mailing list:</div>
+<ul class="list">
+<li class="listitem">
+<div class="para">(un)subscribe: <a class="" href="http://lists.logilab.org/mailman/listinfo/forum-fr">http://lists.logilab.org/mailman/listinfo/forum-fr</a>
+</div>
+</li>
+<li class="listitem">
+<div class="para">archives: <a class="" href="http://lists.logilab.org/pipermail/forum-fr">http://lists.logilab.org/pipermail/forum-fr</a>
+</div>
+</li>
+</ul>
+<div class="para">Notice though that this list has a very low traffic since most pylint related
+discussions are done on the python-projects mailing list.</div>
+
+
+

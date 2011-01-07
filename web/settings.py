@@ -96,4 +96,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',
     'pybbs',
+    'django_hudson',
+)
+
+# ¸ødjango-hudson ¿´µÄ
+PROJECT_APPS = (
+    'pybbs',
 )

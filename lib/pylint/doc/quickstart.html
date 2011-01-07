@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<div class="component-title-block"><div class="component-title">Pylint Quickstart</div></div>
+
+<div class="para">This document is meant to get you started with Pylint. It assumes that
+you have installed pylint following the instructions in the README
+document found in the source documentation.</div>
+<div class="sect1-title">
+<a name="what-is-pylint"></a>1. What is pylint?</div>
+
+<div class="para">Pylint is a tool that checks for errors in python code, tries to
+enforce a coding standard and looks for bad code smells. This is
+similar but nevertheless different from what <a class="" href="http://pychecker.sf.net">pychecker</a> provides,
+especially since pychecker explicitly does not bother with coding
+style. The default coding style used by pylint is close to
+<a class="" href="http://www.python.org/doc/essays/styleguide.html">Guido's style guide</a>. For more information about code smells, refer
+to Martin Fowler's <a class="" href="http://www.refactoring.com/">refactoring book</a>
+</div>
+<div class="para">Pylint will display a number of errors and warnings as it analyzes the
+code, as well as some statistics about the number of warnings and
+errors found in different files. If you run pylint twice, it will
+display the statistics from the previous run together with the ones
+from the current run, so that you can see if the code has improved or
+not.</div>
+<div class="para">Last but not least, the code is given an overall mark, based on the
+number an severity of the warnings and errors. This has proven to
+be very motivating for programmers.</div>
+
+<div class="sect1-title">
+<a name="invoking-pylint"></a>2. Invoking pylint</div>
+
+<div class="para">Pylint is meant to be called from the command line. The usage is</div>
+<div class="programlisting">
+pylint [options] module_or_package
+</div>
+<div class="para">You should give pylint the name of a Python package or module. Pylint
+will <span class="literal">import</span> this package or module, so you should pay attention to
+your <span class="literal">PYTHONPATH</span>, since it is a common error to analyze an
+installed version of a module instead of the development version.</div>
+<div class="para">It is also possible to analyze python files, with a few
+restrictions. The thing to keep in mind is that pylint will try to
+convert the file name to a module name, and only be able to process
+the file if it succeeds.</div>
+<div class="programlisting">
+pylint mymodule.py
+</div>
+<div class="para">should always works since the current working
+directory is automatically added on top  of the python path</div>
+<div class="programlisting">
+pylint directory/mymodule.py
+</div>
+<div class="para">will work if "directory" is a python package (i.e. has an __init__.py
+file) or if "directory" is in the python path.</div>
+<div class="para">For more details on this see the <a class="" href="FAQ.html">FAQ</a>.</div>
+<div class="para">You can also start a thin gui around pylint (require TkInter) by
+typing</div>
+<div class="programlisting">
+pylint-gui
+</div>
+<div class="para">This should open a window where you can enter the name of the package
+or module to check, at pylint messages will be displayed in the user
+interface.</div>
+
+<div class="sect1-title">
+<a name="pylint-output"></a>3. Pylint output</div>
+
+<div class="para">The default format for the output is raw text. But passing pylint the
+<span class="literal">--output-format=html</span> or <span class="literal">-f html</span> option will produce an HTML document.</div>
+<div class="para">There are several sections in pylint's output.</div>
+<div class="sect2-title">
+<a name="source-code-analysis-section"></a>3.1. Source code analysis section</div>
+
+<div class="para">For each python module,
+pylint will first display a few '*' characters followed by the name
+of the module. Then, a number of messages with the following
+format:</div>
+<div class="programlisting">
+MESSAGE_TYPE: LINE_NUM:[OBJECT:] MESSAGE
+</div>
+<div class="para">You can get another output format, useful since it's recognized by
+most editors or other development tools using the <span class="literal">--parseable=y</span>
+option.</div>
+<div class="para">The message type can be:</div>
+<div class="blockquote">
+<ul class="list">
+<li class="listitem">
+<div class="para">[R]efactor for a "good practice" metric violation</div>
+</li>
+<li class="listitem">
+<div class="para">[C]onvention for coding standard violation</div>
+</li>
+<li class="listitem">
+<div class="para">[W]arning for stylistic problems, or minor programming issues</div>
+</li>
+<li class="listitem">
+<div class="para">[E]rror for important programming issues (i.e. most probably bug)</div>
+</li>
+<li class="listitem">
+<div class="para">[F]atal for errors which prevented further processing</div>
+</li>
+</ul>
+</div>
+<div class="para">Sometimes the line of code which caused the error is displayed with
+a caret pointing to the error. This may be generalized in future
+versions of pylint.</div>
+<div class="para">Example (extracted from a run of pylint on itself...):</div>
+<div class="programlisting">
+************* Module pylint.checkers.format
+W: 50: Too long line (86/80)
+W:108: Operator not followed by a space
+     print &gt;&gt;sys.stderr, 'Unable to match %r', line
+            ^
+W:141: Too long line (81/80)
+W: 74:searchall: Unreachable code
+W:171:FormatChecker.process_tokens: Redefining built-in (type)
+W:150:FormatChecker.process_tokens: Too many local variables (20/15)
+W:150:FormatChecker.process_tokens: Too many branches (13/12)
+</div>
+
+<div class="sect2-title">
+<a name="reports-section"></a>3.2. Reports section</div>
+
+<div class="para">Following the analysis message, pylint will display a set of reports,
+each one focusing on a particular aspect of the project, such as number
+of messages by categories, modules dependencies...</div>
+<div class="para">For instance, the metrics report displays summaries gathered from the
+current run.</div>
+<div class="blockquote">
+<ul class="list">
+<li class="listitem">
+<div class="para">the number of processed modules</div>
+</li>
+<li class="listitem">
+<div class="para">for each module, the percentage of errors and warnings</div>
+</li>
+<li class="listitem">
+<div class="para">the total number of errors and warnings</div>
+</li>
+<li class="listitem">
+<div class="para">percentage of classes, functions and modules with docstrings, and
+a comparison from the previous run</div>
+</li>
+<li class="listitem">
+<div class="para">percentage of classes, functions and modules with correct name
+(according to the coding standard), and a comparison from the
+previous run</div>
+</li>
+<li class="listitem">
+<div class="para">a list of external dependencies found in the code, and where they appear</div>
+</li>
+</ul>
+</div>
+<div class="para">Also, a global evaluation for the code is computed, and an
+optional witty comment is displayed (if <span class="literal">--comment=y</span> was
+specified on the command line).</div>
+
+
+<div class="sect1-title">
+<a name="command-line-options"></a>4. Command line options</div>
+
+<div class="para">First of all, we have two basic (but useful) options.</div>
+<a name="id147453"></a><table class="table" cellspacing="0">
+<thead class="bordered-cells"><tr class="odd-line">
+<td class="title-cell" rowspan="1" colspan="1" style="text-align: center;">Option</td>
+<td class="title-cell" rowspan="1" colspan="1" style="text-align: center;">Description</td>
+</tr></thead>
+<tbody class="backgrounded-cells">
+<tr class="odd-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--version</span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">show program's version number and exit</div>
+</td>
+</tr>
+<tr class="even-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+-h</span><span class="command">
+, --help</span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">show help about the command line options</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="para">Pylint is architectured around several checkers. By default all
+checkers are enabled. You can disable a specific checker or some of its
+messages or messages categories by specifying
+<span class="literal">--disable=&lt;id&gt;</span>. A more general disable can be enabled with
+or disable all checkers using
+<span class="literal">--enable=w&lt;id&gt;</span>. See the list of available <a class="" href="features.html">features</a> for a
+description of provided checkers with their functionalities.
+The <span class="literal">--disable</span> and <span class="literal">--enable</span> options can be used with comma separated lists
+mixing checkers, message ids and categories like <span class="literal">-d C,W,E0611,design</span>
+</div>
+<div class="para">Each checker has some specific options, which can take either a yes/no
+value, an integer, a python regular expression, or a comma separated
+list of values (which are generally used to override a regular
+expression in special cases). For a full list of options, use <span class="literal">--help</span>
+</div>
+<div class="para">Specifying all the options suitable for your setup and coding
+standards can be tedious, so it is possible to use a rc file to
+specify the default values. Pylint looks for /etc/pylintrc and
+~/.pylintrc. The <span class="literal">--generate-rcfile</span> option will generate a
+commented configuration file according to the current configuration on
+standard output and exit. You can put other options before this one to
+use them in the configuration, or start with the default values and
+hand tune the configuration.</div>
+<div class="para">Other useful global options include:</div>
+<a name="id186448"></a><table class="table" cellspacing="0">
+<thead class="bordered-cells"><tr class="odd-line">
+<td class="title-cell" rowspan="1" colspan="1" style="text-align: center;">Option</td>
+<td class="title-cell" rowspan="1" colspan="1" style="text-align: center;">Description</td>
+</tr></thead>
+<tbody class="backgrounded-cells">
+<tr class="odd-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--zope</span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Initialize Zope products before starting</div>
+</td>
+</tr>
+<tr class="even-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--ignore=<span class="replaceable">file</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Add &lt;file&gt; (may be a directory) to the black
+list. It should be a base name, not a path.
+You may set this option multiple times.</div>
+</td>
+</tr>
+<tr class="odd-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--statistics=<span class="replaceable">y_or_n</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Compute statistics on collected data.</div>
+</td>
+</tr>
+<tr class="even-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--persistent=<span class="replaceable">y_or_n</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Pickle collected data for later comparisons.</div>
+</td>
+</tr>
+<tr class="odd-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--comment=<span class="replaceable">y_or_n</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Add a comment according to your evaluation note.</div>
+</td>
+</tr>
+<tr class="even-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--parseable=<span class="replaceable">y_or_n</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Use a parseable output format.</div>
+</td>
+</tr>
+<tr class="odd-line">
+<td class="regular-cell" rowspan="1" colspan="1">
+<span class="command">
+--html=<span class="replaceable">y_or_n</span></span>
+</td>
+<td class="regular-cell" rowspan="1" colspan="1">
+<div class="para">Use HTML as output format instead of text.</div>
+</td>
+</tr>
+</tbody>
+</table>
+
+<div class="sect1-title">
+<a name="bug-reports"></a>5. Bug reports</div>
+
+<div class="para">You think you have found a bug in Pylint? Well, this may be the case
+since Pylint is under development. Please take the time to send a bug
+report to <a class="" href="mailto:python-projects@logilab.org">python-projects@logilab.org</a>. This mailing list is also a
+nice place to discuss Pylint issues.</div>
+
+
