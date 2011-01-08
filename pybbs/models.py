@@ -1,37 +1,71 @@
 #! coding:utf-8
 from django.db import models
+from django.db.models.signals import post_save
+from django.db.models import Q
 from django.contrib.auth.models import User
 
-# 彪哥，虽然你的习惯是在model里面加入admin
-# but，Django的约束是放在admin.py 里面。
-# 我不想说明神马，只是希望这次你就依了我吧。
-
-# 彪哥必看
-# 关于我加入的south app 这是在Django里面的migration
-# 你也不想每次都要先删除数据库以后 manager.py syncdb吧？
-# 所以给你总结出来就是
-# ./manage.py schemamigration [app] --auto
-# ./manage.py migrate [app]
-# 有神马问题立刻联系我，如果没有问题，表示同意的话请删除注释
-
 class Category(models.Model):
-    name = models.CharField('名称' , max_length = 100)
-    slug = models.SlugField ( u"短地址", max_length = 100 )
-    sort = models.IntegerField('排序' , max_length = 10 , default = 01)
+    name = models.CharField ( u'名称',   max_length = 200 )
+    slug = models.SlugField ( u"短地址", max_length = 200 )
+    topics = models.BigIntegerField ( u'主题', default = 0 )
+    replies = models.BigIntegerField ( u'回复', default = 0 )
+    
+    def __unicode__ ( self ):
+        return self.name
+    
+class TopicManager ( models.Manager ):
+    def listWithCategory ( self, category, page = 1 ):
+        pass
+    
+    def read ( self, slug, id ):
+        return super ( TopicManager, self ).get_query_set ().get ( Q ( slug = slug ), Q ( id = id ) )
 
-class Thread(models.Model):
-    cate = models.ForeignKey(Category)
-    slug = models.SlugField ( u"短地址", max_length = 100, null = True, blank = True )
-    title = models.CharField('标题' , max_length = 255)
+class Topic(models.Model):
+    category = models.ForeignKey ( Category )
     user = models.ForeignKey(User)
-    content = models.TextField('内容')
-    hits = models.IntegerField('浏览量' , default = 0)
-    create_at = models.DateTimeField('发表时间')
-    update_at = models.DateTimeField('最后修改时间')
+    slug = models.SlugField ( u"短地址", max_length = 100, null = True, blank = True )
+    subject = models.CharField ( u'主题' , max_length = 255 )
+    body = models.TextField ( u'内容' )
+    visits = models.BigIntegerField ( u'浏览', default = 0, editable = False )
+    replies = models.BigIntegerField ( u'回复', default = 0, editable = False )
+    create_at = models.DateTimeField ( u'发表时间', auto_now_add = True )
+    update_at = models.DateTimeField ( u'最后修改时间', auto_now = True, auto_now_add = True )
+    last_reply_author = models.ForeignKey ( User, related_name = 'last_reply_author', null = True, blank = True )
+    last_reply_create = models.DateTimeField ( u'最后回复时间', null = True, blank = True )
+    
+    objects = TopicManager ()
+    
+    def __unicode__ ( self ):
+        return self.subject
+
+class ReplyManager ( models.Manager ):
+    def list ( self, topic, page = 1 ):
+        return super ( ReplyManager, self ).filter ( topic = topic )
 
 class Reply(models.Model):
-    thread = models.ForeignKey(Thread)
-    user = models.ForeignKey(User)
-    content = models.TextField('内容')
-    create_at = models.DateTimeField('发表时间')
-    update_at = models.DateTimeField('最后修改时间')
+    topic = models.ForeignKey ( Topic, verbose_name = u"主题" )
+    user = models.ForeignKey ( User )
+    body = models.TextField ( u'内容' )
+    create_at = models.DateTimeField ( u'发表时间', auto_now_add = True )
+    update_at = models.DateTimeField ( u'最后修改时间', auto_now = True, auto_now_add = True )
+
+    objects = ReplyManager () 
+    
+    class Meta:
+        ordering = [ '-create_at' ]
+
+    def __unicode__ ( self ):
+        return self.body
+
+def post_reply ( sender, instance, raw, created, **kwargs ):
+    if instance and created:
+        instance.topic.replies += 1
+        instance.topic.last_reply_create = instance.create_at
+        instance.topic.last_reply_author = instance.author
+        instance.topic.save ()
+
+def post_topic ( sender, instance, raw, created, **kwargs ):
+    pass
+
+post_save.connect ( post_reply, Reply )
+post_save.connect ( post_topic, Topic )

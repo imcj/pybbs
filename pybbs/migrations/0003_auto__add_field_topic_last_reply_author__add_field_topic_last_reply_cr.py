@@ -8,53 +8,20 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding model 'Category'
-        db.create_table('pybbs_category', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=200, db_index=True)),
-            ('topics', self.gf('django.db.models.fields.BigIntegerField')(default=0)),
-            ('replies', self.gf('django.db.models.fields.BigIntegerField')(default=0)),
-        ))
-        db.send_create_signal('pybbs', ['Category'])
+        # Adding field 'Topic.last_reply_author'
+        db.add_column('pybbs_topic', 'last_reply_author', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='last_reply_author', null=True, to=orm['auth.User']), keep_default=False)
 
-        # Adding model 'Topic'
-        db.create_table('pybbs_topic', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pybbs.Category'])),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('slug', self.gf('django.db.models.fields.SlugField')(db_index=True, max_length=100, null=True, blank=True)),
-            ('subject', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('body', self.gf('django.db.models.fields.TextField')()),
-            ('visits', self.gf('django.db.models.fields.BigIntegerField')(default=0)),
-            ('replies', self.gf('django.db.models.fields.BigIntegerField')(default=0)),
-            ('create_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('update_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('pybbs', ['Topic'])
-
-        # Adding model 'Reply'
-        db.create_table('pybbs_reply', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('topics', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pybbs.Topic'])),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('body', self.gf('django.db.models.fields.TextField')()),
-            ('create_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('update_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('pybbs', ['Reply'])
+        # Adding field 'Topic.last_reply_create'
+        db.add_column('pybbs_topic', 'last_reply_create', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True), keep_default=False)
 
 
     def backwards(self, orm):
         
-        # Deleting model 'Category'
-        db.delete_table('pybbs_category')
+        # Deleting field 'Topic.last_reply_author'
+        db.delete_column('pybbs_topic', 'last_reply_author_id')
 
-        # Deleting model 'Topic'
-        db.delete_table('pybbs_topic')
-
-        # Deleting model 'Reply'
-        db.delete_table('pybbs_reply')
+        # Deleting field 'Topic.last_reply_create'
+        db.delete_column('pybbs_topic', 'last_reply_create')
 
 
     models = {
@@ -103,11 +70,11 @@ class Migration(SchemaMigration):
             'topics': ('django.db.models.fields.BigIntegerField', [], {'default': '0'})
         },
         'pybbs.reply': {
-            'Meta': {'object_name': 'Reply'},
+            'Meta': {'ordering': "['-create_at']", 'object_name': 'Reply'},
             'body': ('django.db.models.fields.TextField', [], {}),
             'create_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'topics': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['pybbs.Topic']"}),
+            'topic': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['pybbs.Topic']"}),
             'update_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
         },
@@ -117,6 +84,8 @@ class Migration(SchemaMigration):
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['pybbs.Category']"}),
             'create_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_reply_author': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_reply_author'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'last_reply_create': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'replies': ('django.db.models.fields.BigIntegerField', [], {'default': '0'}),
             'slug': ('django.db.models.fields.SlugField', [], {'db_index': 'True', 'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'subject': ('django.db.models.fields.CharField', [], {'max_length': '255'}),

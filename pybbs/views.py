@@ -1,25 +1,27 @@
 #! coding:utf-8
-from django.http import HttpResponseRedirect , HttpRequest , HttpResponse
-from django.shortcuts import render_to_response
-from django.contrib.auth import User
-from org_51py.bbs.models import *
+from django.http import HttpResponseRedirect , HttpRequest , HttpResponse, Http404
+from django.template import RequestContext
+from django.shortcuts import render_to_response, get_object_or_404
+from django.contrib.auth.models import User
+from pybbs.models import Topic, Reply
 
-def index(req):
+def topic_list ( request , category_slug, page = 1 ):
     pass
 
-def category(req , cate):
-    pass
-
-def thread(req , id):
+def topic ( request, category_slug, topic_id, topic_slug, page = 1 ):
     try:
-        tid = int(id)
-        td = Thread.objects.get(id=id)
-        return HttpResponse(td.title)
-    except:
-        return HttpResponseRedirect('/error/')
-
-def reply(req , tid):
-    if( req.method == 'POST' ):
-        pass
-    else:
-        return render_to_response('reply.html' , locals())
+        topic_object = Topic.objects.read ( topic_slug, topic_id )
+    except Topic.DoesNotExist:
+        raise Http404
+    reply_objects = Reply.objects.list ( topic_object, page )
+    
+    context = {
+        'topic'   : topic_object,
+        'replies' : reply_objects
+    }
+    
+    return render_to_response (
+        'pybbs/topic.html',
+        context,
+        context_instance = RequestContext ( request )
+    )

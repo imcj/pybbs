@@ -8,53 +8,20 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding model 'Category'
-        db.create_table('pybbs_category', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=200, db_index=True)),
-            ('topics', self.gf('django.db.models.fields.BigIntegerField')(default=0)),
-            ('replies', self.gf('django.db.models.fields.BigIntegerField')(default=0)),
-        ))
-        db.send_create_signal('pybbs', ['Category'])
+        # Deleting field 'Reply.topics'
+        db.delete_column('pybbs_reply', 'topics_id')
 
-        # Adding model 'Topic'
-        db.create_table('pybbs_topic', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pybbs.Category'])),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('slug', self.gf('django.db.models.fields.SlugField')(db_index=True, max_length=100, null=True, blank=True)),
-            ('subject', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('body', self.gf('django.db.models.fields.TextField')()),
-            ('visits', self.gf('django.db.models.fields.BigIntegerField')(default=0)),
-            ('replies', self.gf('django.db.models.fields.BigIntegerField')(default=0)),
-            ('create_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('update_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('pybbs', ['Topic'])
-
-        # Adding model 'Reply'
-        db.create_table('pybbs_reply', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('topics', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pybbs.Topic'])),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('body', self.gf('django.db.models.fields.TextField')()),
-            ('create_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('update_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('pybbs', ['Reply'])
+        # Adding field 'Reply.topic'
+        db.add_column('pybbs_reply', 'topic', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['pybbs.Topic']), keep_default=False)
 
 
     def backwards(self, orm):
         
-        # Deleting model 'Category'
-        db.delete_table('pybbs_category')
+        # User chose to not deal with backwards NULL issues for 'Reply.topics'
+        raise RuntimeError("Cannot reverse this migration. 'Reply.topics' and its values cannot be restored.")
 
-        # Deleting model 'Topic'
-        db.delete_table('pybbs_topic')
-
-        # Deleting model 'Reply'
-        db.delete_table('pybbs_reply')
+        # Deleting field 'Reply.topic'
+        db.delete_column('pybbs_reply', 'topic_id')
 
 
     models = {
@@ -107,7 +74,7 @@ class Migration(SchemaMigration):
             'body': ('django.db.models.fields.TextField', [], {}),
             'create_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'topics': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['pybbs.Topic']"}),
+            'topic': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['pybbs.Topic']"}),
             'update_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
         },
