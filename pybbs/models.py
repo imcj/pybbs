@@ -31,7 +31,7 @@ class Topic(models.Model):
     create_at = models.DateTimeField ( u'发表时间', auto_now_add = True )
     update_at = models.DateTimeField ( u'最后修改时间', auto_now = True, auto_now_add = True )
     last_reply_author = models.ForeignKey ( User, related_name = 'last_reply_author', null = True, blank = True )
-    last_reply_create = models.DateTimeField ( u'最后回复时间', null = True, blank = True )
+    last_reply_create = models.DateTimeField ( u'最后回复时间', auto_now_add = True, null = True, blank = True )
     
     objects = TopicManager ()
     
@@ -39,6 +39,9 @@ class Topic(models.Model):
         return self.subject
 
 class ReplyManager ( models.Manager ):
+    def create(self, **kwargs):
+        import pdb; pdb.set_trace ()
+
     def list ( self, topic, page = 1 ):
         return super ( ReplyManager, self ).filter ( topic = topic )
 
@@ -56,16 +59,27 @@ class Reply(models.Model):
 
     def __unicode__ ( self ):
         return self.body
+    
+    def save(self, **kwargs ):
+        if self.pk is None:
+            topic = self.topic
+            topic.replies += 1
+            topic.last_reply_create = self.create_at
+            topic.last_reply_author = User ( id = self.user.id )
+            topic.save ()
+            
+        super ( Reply, self ).save ( **kwargs )
 
 def post_reply ( sender, instance, raw, created, **kwargs ):
     if instance and created:
-        instance.topic.replies += 1
-        instance.topic.last_reply_create = instance.create_at
-        instance.topic.last_reply_author = instance.author
-        instance.topic.save ()
+        import pdb; pdb.set_trace ()
+        topic = instance.topic
+        topic.replies += 1
+        topic.last_reply_create = instance.create_at
+        topic.last_reply_author = instance.user
 
 def post_topic ( sender, instance, raw, created, **kwargs ):
     pass
 
-post_save.connect ( post_reply, Reply )
+#post_save.connect ( post_reply, Reply )
 post_save.connect ( post_topic, Topic )

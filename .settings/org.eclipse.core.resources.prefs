@@ -1,9 +1,12 @@
-#Sun Jan 09 03:09:58 CST 2011
+#Sun Jan 09 04:53:29 CST 2011
 eclipse.preferences.version=1
 encoding//lib/django_hudson/management/commands/hudson.py=utf-8
 encoding//pybbs/admin.py=utf-8
 encoding//pybbs/forms.py=utf-8
 encoding//pybbs/models.py=utf-8
+encoding//pybbs/templates/pybbs/reply_add.html=UTF-8
+encoding//pybbs/templates/pybbs/reply_update.html=UTF-8
 encoding//pybbs/templates/pybbs/topic_add.html=UTF-8
 encoding//pybbs/tests.py=utf-8
 encoding//pybbs/views.py=utf-8
+encoding/<project>=UTF-8
