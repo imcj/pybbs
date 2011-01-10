@@ -1,10 +1,10 @@
 import os, sys
-ROOT = os.path.abspath(".")
+ROOT = os.path.join ( os.path.dirname ( __file__ ), ".." ) 
+WEB_ROOT = os.path.dirname ( __file__ )
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
 sys.path.insert(0, ROOT)
-sys.path.insert(0, os.path.join(ROOT, "web"))
+sys.path.insert(0, WEB_ROOT)
 sys.path.insert(0, os.path.join(ROOT, "lib"))
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -48,8 +48,7 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
-
+MEDIA_ROOT = os.path.join ( WEB_ROOT, "media" )
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
@@ -58,7 +57,7 @@ MEDIA_URL = '/media/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/admin_media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '+-!d%$mcl4xwbzv0dna4!e%igcdnh1gzvf!lfx5rry&7qg%jcj'
@@ -80,10 +79,9 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'web.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join ( WEB_ROOT, "templates" ),
 )
+
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -95,9 +93,28 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',
     'pybbs',
+    'userprofile',
+    'siteprofile',
     'django_hudson',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "userprofile.context_processors.site",
+    "userprofile.context_processors.css_classes",
 )
 
 PROJECT_APPS = (
     'pybbs',
 )
+
+AUTH_PROFILE_MODULE = 'siteprofile.profile'
+I18N_URLS = False
+DEFAULT_AVATAR = os.path.join ( MEDIA_ROOT, 'userprofile/generic.bmp')
+AVATAR_WEBSEARCH = False
+# 127.0.0.1:8000 Google Maps API Key
+#GOOGLE_MAPS_API_KEY = "ABQIAAAA06IJoYHDPFMx4u3hTtaghxTpH3CbXHjuCVmaTc5MkkU4wO1RRhST5bKY_U7dUG1ZGu1S-n-ukXGNjQ"
+# Haddock
+#GOOGLE_MAPS_API_KEY="ABQIAAAA06IJoYHDPFMx4u3hTtaghxS1mGAeXhF8eEwoOC3WUqD9xSVHbhT_wvgbriWemZzoPwFT5-HqnLJ9-A"
+REQUIRE_EMAIL_CONFIRMATION = False
+AVATAR_QUOTA = 8
